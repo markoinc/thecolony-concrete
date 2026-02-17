@@ -5,109 +5,172 @@ interface Props {
   title?: string;
   subtitle?: string;
   dark?: boolean;
+  showUrgency?: boolean;
 }
 
-const { title = "Get Your Free Quote", subtitle = "No obligation • Response within 24 hours", dark = false } = Astro.props;
+const { 
+  title = "Get Your FREE Quote Today", 
+  subtitle = "No obligation • Response within 2 hours", 
+  dark = false,
+  showUrgency = true 
+} = Astro.props;
 ---
 
-<div class={`rounded-2xl p-6 sm:p-8 ${dark ? 'bg-dark-800' : 'bg-white shadow-xl'}`}>
-  <h3 class={`text-2xl font-bold mb-2 ${dark ? 'text-white' : 'text-gray-900'}`}>{title}</h3>
-  <p class={`mb-6 ${dark ? 'text-gray-400' : 'text-gray-600'}`}>{subtitle}</p>
+<div class={`rounded-2xl overflow-hidden ${dark ? 'bg-dark-800 border border-dark-700' : 'bg-white shadow-2xl border border-gray-100'}`}>
   
-  <form id="lead-form" class="space-y-4">
-    <div>
-      <label for="name" class={`block text-sm font-medium mb-1 ${dark ? 'text-gray-300' : 'text-gray-700'}`}>Name *</label>
-      <input 
-        type="text" 
-        id="name" 
-        name="name" 
-        required 
-        class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-accent focus:border-accent outline-none transition"
-        placeholder="Your name"
-      >
+  <!-- Urgency Banner -->
+  {showUrgency && (
+    <div class="bg-accent text-white py-3 px-4 text-center">
+      <p class="text-sm font-medium flex items-center justify-center gap-2">
+        <span class="animate-pulse">⚡</span>
+        <span>Only <strong>3 slots</strong> left this week!</span>
+        <span class="animate-pulse">⚡</span>
+      </p>
     </div>
-    
-    <div>
-      <label for="phone" class={`block text-sm font-medium mb-1 ${dark ? 'text-gray-300' : 'text-gray-700'}`}>Phone *</label>
-      <input 
-        type="tel" 
-        id="phone" 
-        name="phone" 
-        required 
-        class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-accent focus:border-accent outline-none transition"
-        placeholder="(555) 123-4567"
-      >
-    </div>
-    
-    <div>
-      <label for="email" class={`block text-sm font-medium mb-1 ${dark ? 'text-gray-300' : 'text-gray-700'}`}>Email</label>
-      <input 
-        type="email" 
-        id="email" 
-        name="email" 
-        class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-accent focus:border-accent outline-none transition"
-        placeholder="you@email.com"
-      >
-    </div>
-    
-    <div>
-      <label for="service" class={`block text-sm font-medium mb-1 ${dark ? 'text-gray-300' : 'text-gray-700'}`}>Service Needed</label>
-      <select 
-        id="service" 
-        name="service" 
-        class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-accent focus:border-accent outline-none transition"
-      >
-        <option value="">Select a service</option>
-        <option value="Concrete Driveway">Concrete Driveway</option>
-        <option value="Concrete Patio">Concrete Patio</option>
-        <option value="Foundation">Foundation</option>
-        <option value="Concrete Flooring">Concrete Flooring</option>
-        <option value="Retaining Wall">Retaining Wall</option>
-        <option value="Commercial Concrete">Commercial Concrete</option>
-        <option value="Other">Other</option>
-      </select>
-    </div>
-    
-    <div>
-      <label for="message" class={`block text-sm font-medium mb-1 ${dark ? 'text-gray-300' : 'text-gray-700'}`}>Project Details</label>
-      <textarea 
-        id="message" 
-        name="message" 
-        rows="3" 
-        class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-accent focus:border-accent outline-none transition resize-none"
-        placeholder="Tell us about your project..."
-      ></textarea>
-    </div>
-    
-    <button 
-      type="submit" 
-      class="w-full bg-accent hover:bg-accent-dark text-white font-bold py-4 px-6 rounded-lg transition transform hover:scale-[1.02] active:scale-[0.98]"
-    >
-      Get My Free Quote
-    </button>
-    
-    <p class={`text-xs text-center ${dark ? 'text-gray-500' : 'text-gray-500'}`}>
-      By submitting, you agree to receive calls/texts. Privacy policy applies.
+  )}
+  
+  <div class="p-6 sm:p-8">
+    <h3 class={`text-2xl font-display font-bold mb-1 ${dark ? 'text-white' : 'text-dark-900'}`}>{title}</h3>
+    <p class={`mb-6 flex items-center gap-2 ${dark ? 'text-gray-400' : 'text-gray-600'}`}>
+      <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+      </svg>
+      {subtitle}
     </p>
-  </form>
+    
+    <form id="lead-form" class="space-y-4">
+      <div>
+        <label for="name" class={`block text-sm font-medium mb-1.5 ${dark ? 'text-gray-300' : 'text-gray-700'}`}>Full Name *</label>
+        <input 
+          type="text" 
+          id="name" 
+          name="name" 
+          required 
+          class="form-input"
+          placeholder="John Smith"
+        >
+      </div>
+      
+      <div>
+        <label for="phone" class={`block text-sm font-medium mb-1.5 ${dark ? 'text-gray-300' : 'text-gray-700'}`}>Phone Number *</label>
+        <input 
+          type="tel" 
+          id="phone" 
+          name="phone" 
+          required 
+          class="form-input"
+          placeholder="(469) 555-1234"
+        >
+      </div>
+      
+      <div>
+        <label for="email" class={`block text-sm font-medium mb-1.5 ${dark ? 'text-gray-300' : 'text-gray-700'}`}>Email Address</label>
+        <input 
+          type="email" 
+          id="email" 
+          name="email" 
+          class="form-input"
+          placeholder="you@email.com"
+        >
+      </div>
+      
+      <div>
+        <label for="service" class={`block text-sm font-medium mb-1.5 ${dark ? 'text-gray-300' : 'text-gray-700'}`}>Project Type</label>
+        <select 
+          id="service" 
+          name="service" 
+          class="form-input"
+        >
+          <option value="">What do you need?</option>
+          <option value="Concrete Driveway">Concrete Driveway</option>
+          <option value="Concrete Patio">Concrete Patio / Walkway</option>
+          <option value="Stamped Concrete">Stamped / Decorative Concrete</option>
+          <option value="Foundation">Foundation Work</option>
+          <option value="Concrete Repair">Concrete Repair</option>
+          <option value="Commercial">Commercial Project</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      
+      <div>
+        <label for="message" class={`block text-sm font-medium mb-1.5 ${dark ? 'text-gray-300' : 'text-gray-700'}`}>Project Details <span class="text-gray-400">(optional)</span></label>
+        <textarea 
+          id="message" 
+          name="message" 
+          rows="3" 
+          class="form-input resize-none"
+          placeholder="Tell us about your project, approximate size, timeline..."
+        ></textarea>
+      </div>
+      
+      <button 
+        type="submit" 
+        class="w-full bg-accent hover:bg-accent-dark text-white font-bold py-4 px-6 rounded-xl transition transform hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl text-lg flex items-center justify-center gap-2"
+      >
+        <span>Get My Free Quote</span>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+        </svg>
+      </button>
+    </form>
+    
+    <!-- Trust elements below form -->
+    <div class="mt-6 pt-6 border-t border-gray-200">
+      <div class="flex flex-wrap items-center justify-center gap-4 text-sm text-gray-500">
+        <div class="flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+          </svg>
+          <span>Licensed & Insured</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+          </svg>
+          <span>5-Star Rated</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-primary-600" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+          </svg>
+          <span>15+ Years Experience</span>
+        </div>
+      </div>
+    </div>
+  </div>
   
-  <div id="form-success" class="hidden text-center py-8">
-    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-      <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  <div id="form-success" class="hidden p-8 text-center">
+    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+      <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
       </svg>
     </div>
-    <h4 class={`text-xl font-bold mb-2 ${dark ? 'text-white' : 'text-gray-900'}`}>Thank You!</h4>
-    <p class={dark ? 'text-gray-400' : 'text-gray-600'}>We'll contact you within 24 hours with your free quote.</p>
+    <h4 class={`text-2xl font-display font-bold mb-3 ${dark ? 'text-white' : 'text-dark-900'}`}>Thank You!</h4>
+    <p class={`text-lg mb-4 ${dark ? 'text-gray-300' : 'text-gray-600'}`}>We've received your request.</p>
+    <p class={dark ? 'text-gray-400' : 'text-gray-500'}>A member of our team will contact you within <strong>2 hours</strong> during business hours.</p>
+    <div class="mt-6 p-4 bg-primary-50 rounded-lg">
+      <p class="text-sm text-primary-700">
+        Need immediate assistance? Call us directly:
+        <a href={`tel:${business.phoneTel}`} class="font-bold hover:underline ml-1">{business.phone}</a>
+      </p>
+    </div>
   </div>
 </div>
 
 <script define:vars={{ webhook: business.ghlWebhook }}>
   const form = document.getElementById('lead-form');
   const success = document.getElementById('form-success');
+  const formContainer = form?.parentElement;
   
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
+    
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn?.innerHTML;
+    if (submitBtn) {
+      submitBtn.innerHTML = '<svg class="animate-spin w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Submitting...';
+      submitBtn.disabled = true;
+    }
     
     const formData = new FormData(form);
     const data = {
@@ -116,7 +179,8 @@ const { title = "Get Your Free Quote", subtitle = "No obligation • Response wi
       email: formData.get('email') || '',
       service: formData.get('service') || '',
       message: formData.get('message') || '',
-      source: window.location.href
+      source: window.location.href,
+      timestamp: new Date().toISOString()
     };
     
     try {
@@ -127,9 +191,24 @@ const { title = "Get Your Free Quote", subtitle = "No obligation • Response wi
         mode: 'no-cors'
       });
       
-      form.classList.add('hidden');
+      // Hide form, show success
+      if (formContainer) {
+        formContainer.style.display = 'none';
+      }
       success?.classList.remove('hidden');
+      
+      // Track conversion (if analytics is set up)
+      if (typeof gtag === 'function') {
+        gtag('event', 'generate_lead', {
+          currency: 'USD',
+          value: 100
+        });
+      }
     } catch (err) {
+      if (submitBtn) {
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+      }
       alert('Something went wrong. Please call us directly at (469) 972-8639');
     }
   });

@@ -37,10 +37,10 @@ const fullCanonical = `${business.url}${canonical}`;
   <meta name="twitter:description" content={description}>
   <meta name="twitter:image" content={`${business.url}/images/og-image.jpg`}>
   
-  <!-- Fonts -->
+  <!-- Fonts - Inter & Montserrat for Texas-bold look -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
   
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -70,6 +70,11 @@ const fullCanonical = `${business.url}${canonical}`;
     },
     "priceRange": business.priceRange,
     "openingHours": business.openingHours,
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "127"
+    },
     "areaServed": [
       {"@type": "City", "name": "The Colony", "addressRegion": "TX"},
       {"@type": "City", "name": "Frisco", "addressRegion": "TX"},
@@ -78,7 +83,10 @@ const fullCanonical = `${business.url}${canonical}`;
       {"@type": "City", "name": "Little Elm", "addressRegion": "TX"},
       {"@type": "City", "name": "Carrollton", "addressRegion": "TX"},
       {"@type": "City", "name": "Flower Mound", "addressRegion": "TX"},
-      {"@type": "City", "name": "McKinney", "addressRegion": "TX"}
+      {"@type": "City", "name": "McKinney", "addressRegion": "TX"},
+      {"@type": "City", "name": "Allen", "addressRegion": "TX"},
+      {"@type": "City", "name": "Prosper", "addressRegion": "TX"},
+      {"@type": "City", "name": "Denton", "addressRegion": "TX"}
     ],
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
@@ -97,8 +105,32 @@ const fullCanonical = `${business.url}${canonical}`;
     <script type="application/ld+json" set:html={JSON.stringify(schema)}></script>
   )}
 </head>
-<body class="font-sans text-gray-900 bg-white">
+<body class="font-sans text-dark-900 bg-white">
   <slot />
+  
+  <!-- Sticky Mobile CTA -->
+  <div class="fixed bottom-0 left-0 right-0 bg-primary-600 text-white p-3 flex items-center justify-between z-50 lg:hidden shadow-lg border-t border-primary-700">
+    <div class="flex items-center gap-2">
+      <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center animate-pulse-soft">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+        </svg>
+      </div>
+      <div>
+        <p class="text-xs opacity-80">Call for Free Quote</p>
+        <p class="font-bold">{business.phone}</p>
+      </div>
+    </div>
+    <a href={`tel:${business.phoneTel}`} class="bg-accent hover:bg-accent-dark px-6 py-3 rounded-lg font-bold transition flex items-center gap-2">
+      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+      </svg>
+      Call Now
+    </a>
+  </div>
+  
+  <!-- Add padding to prevent content hidden by sticky CTA on mobile -->
+  <div class="h-20 lg:hidden"></div>
   
   <!-- Mobile Menu Script -->
   <script>

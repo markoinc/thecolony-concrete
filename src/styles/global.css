@@ -2,60 +2,127 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Base styles */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f5f9;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
-}
-
-/* Focus styles */
-*:focus-visible {
-  outline: 2px solid theme('colors.accent.DEFAULT');
-  outline-offset: 2px;
-}
-
-/* Selection */
-::selection {
-  background: theme('colors.accent.DEFAULT');
-  color: white;
-}
-
-/* Prevent horizontal overflow */
-body {
-  overflow-x: hidden;
-}
-
-/* Responsive images */
-img {
-  max-width: 100%;
-  height: auto;
-}
-
-/* Smooth transitions for interactive elements */
-a, button {
-  transition: all 0.2s ease;
-}
-
-/* Mobile tap highlight */
-@media (hover: none) {
-  a, button {
-    -webkit-tap-highlight-color: rgba(249, 115, 22, 0.1);
+@layer base {
+  html {
+    scroll-behavior: smooth;
   }
+  
+  body {
+    @apply antialiased;
+  }
+  
+  /* Texas-bold display headings */
+  h1, h2, h3 {
+    @apply font-display;
+  }
+}
+
+@layer components {
+  /* Primary CTA Button */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 bg-accent hover:bg-accent-dark text-white px-6 py-3 rounded-lg font-bold transition transform hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl;
+  }
+  
+  /* Secondary Button */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg font-bold transition;
+  }
+  
+  /* Outline Button */
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 border-2 border-white/30 hover:bg-white/10 text-white px-6 py-3 rounded-lg font-bold transition;
+  }
+  
+  /* Card styles */
+  .card {
+    @apply bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300;
+  }
+  
+  .card-hover {
+    @apply hover:-translate-y-1;
+  }
+  
+  /* Badge styles */
+  .badge {
+    @apply inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium;
+  }
+  
+  .badge-success {
+    @apply bg-green-100 text-green-800;
+  }
+  
+  .badge-accent {
+    @apply bg-accent/10 text-accent;
+  }
+  
+  /* Trust badge */
+  .trust-badge {
+    @apply flex items-center gap-3 bg-white rounded-xl p-4 shadow-sm border border-gray-100;
+  }
+  
+  /* Form inputs */
+  .form-input {
+    @apply w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-accent focus:border-accent outline-none transition bg-white;
+  }
+  
+  /* Section containers */
+  .section {
+    @apply py-16 lg:py-24;
+  }
+  
+  .container-main {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  /* Gradient backgrounds */
+  .bg-texas {
+    @apply bg-gradient-to-br from-primary-600 via-primary-700 to-primary-900;
+  }
+  
+  .bg-texas-dark {
+    @apply bg-gradient-to-br from-dark-800 via-dark-900 to-black;
+  }
+  
+  /* Urgency banner */
+  .urgency-banner {
+    @apply bg-accent text-white py-2 px-4 text-center text-sm font-medium animate-pulse-soft;
+  }
+}
+
+@layer utilities {
+  /* Text gradient */
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-accent to-accent-light;
+  }
+  
+  /* Subtle pattern overlay */
+  .pattern-overlay {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  
+  /* Animation delays */
+  .delay-100 { animation-delay: 100ms; }
+  .delay-200 { animation-delay: 200ms; }
+  .delay-300 { animation-delay: 300ms; }
+  .delay-400 { animation-delay: 400ms; }
+  .delay-500 { animation-delay: 500ms; }
+}
+
+/* Remove default details marker */
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+details > summary {
+  list-style: none;
+}
+
+/* Smooth scrolling for anchor links */
+html {
+  scroll-padding-top: 80px;
+}
+
+/* Selection color */
+::selection {
+  @apply bg-accent/20 text-accent-dark;
 }

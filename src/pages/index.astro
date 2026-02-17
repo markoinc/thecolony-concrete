@@ -3,7 +3,9 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import LeadForm from '../components/LeadForm.astro';
-import { business, services, locations, faqs } from '../data/business';
+import { business, services, locations, faqs, reviews } from '../data/business';
+
+const topLocations = locations.slice(0, 15);
 
 const faqSchema = {
   "@context": "https://schema.org",
@@ -20,216 +22,574 @@ const faqSchema = {
 ---
 
 <Layout 
-  title={`Concrete Contractors The Colony, TX | ${business.name}`}
+  title={`#1 Concrete Contractors The Colony, TX | ${business.name} | Free Estimates`}
   description={business.metaDescription}
   canonical="/"
   schema={faqSchema}
 >
   <Header />
   
-  <!-- Hero Section -->
-  <section class="bg-gradient-to-br from-dark-800 to-dark-900 relative overflow-hidden">
-    <div class="absolute inset-0 bg-[url("/images/hero-bg.webp")] opacity-20"></div>
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 relative">
-      <div class="grid lg:grid-cols-2 gap-12 items-center">
+  <!-- Hero Section - Form Above Fold -->
+  <section class="bg-texas relative overflow-hidden pattern-overlay">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20 relative">
+      <div class="grid lg:grid-cols-2 gap-12 items-start">
+        
         <!-- Hero Content -->
         <div class="text-white">
-          <div class="inline-flex items-center gap-2 bg-accent/20 border border-accent/30 px-4 py-2 rounded-full text-sm mb-6">
+          <!-- Location Badge -->
+          <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur border border-white/20 px-4 py-2 rounded-full text-sm mb-6">
             <svg class="w-4 h-4 text-accent" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
             </svg>
-            <span>Serving The Colony & DFW Metroplex</span>
+            <span>Serving The Colony & All of DFW</span>
           </div>
           
-          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
-            Local <span class="text-accent">Concrete Contractors</span> in The Colony, TX
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-tight mb-6">
+            The Colony's <span class="text-accent">Trusted</span> Concrete Contractors
           </h1>
           
-          <p class="text-xl text-gray-300 mb-8">
-            Premier concrete services for driveways, patios, foundations & more. Quality craftsmanship with {business.yearsExperience} years of experience. Get your free estimate today!
+          <p class="text-xl text-gray-200 mb-8 leading-relaxed">
+            From stunning driveways to rock-solid foundations, we deliver premium concrete work that stands up to Texas weather. Locally owned, {business.yearsExperience} years of experience, and over {business.projectsCompleted} projects completed across the DFW metroplex.
           </p>
           
-          <div class="flex flex-wrap gap-4 mb-8">
-            <div class="flex items-center gap-2 text-gray-300">
-              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+          <!-- Trust Badges Row -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div class="flex items-center gap-2 bg-white/10 backdrop-blur rounded-lg px-3 py-2">
+              <svg class="w-5 h-5 text-green-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
               </svg>
-              Licensed & Insured
+              <span class="text-sm font-medium">Licensed</span>
             </div>
-            <div class="flex items-center gap-2 text-gray-300">
-              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+            <div class="flex items-center gap-2 bg-white/10 backdrop-blur rounded-lg px-3 py-2">
+              <svg class="w-5 h-5 text-green-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
               </svg>
-              {business.yearsExperience} Years Experience
+              <span class="text-sm font-medium">Insured</span>
             </div>
-            <div class="flex items-center gap-2 text-gray-300">
-              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+            <div class="flex items-center gap-2 bg-white/10 backdrop-blur rounded-lg px-3 py-2">
+              <svg class="w-5 h-5 text-yellow-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
               </svg>
-              Free Estimates
+              <span class="text-sm font-medium">5-Star</span>
+            </div>
+            <div class="flex items-center gap-2 bg-white/10 backdrop-blur rounded-lg px-3 py-2">
+              <svg class="w-5 h-5 text-accent flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+              </svg>
+              <span class="text-sm font-medium">{business.yearsExperience} Yrs</span>
             </div>
           </div>
           
-          <a href={`tel:${business.phoneTel}`} class="inline-flex items-center gap-2 bg-accent hover:bg-accent-dark text-white px-8 py-4 rounded-lg font-bold text-lg transition">
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-            </svg>
-            {business.phone}
-          </a>
+          <!-- Phone CTA for Desktop -->
+          <div class="hidden lg:flex items-center gap-6">
+            <a href={`tel:${business.phoneTel}`} class="inline-flex items-center gap-3 bg-accent hover:bg-accent-dark text-white px-8 py-4 rounded-xl font-bold text-lg transition shadow-lg hover:shadow-xl group">
+              <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center group-hover:scale-110 transition">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                </svg>
+              </div>
+              <div class="text-left">
+                <span class="block text-sm opacity-80">Call Now</span>
+                <span class="block text-xl">{business.phone}</span>
+              </div>
+            </a>
+            <div class="text-gray-300 text-sm">
+              <p class="font-medium">Mon-Fri: 7am-6pm</p>
+              <p>Sat: 8am-4pm</p>
+            </div>
+          </div>
         </div>
         
         <!-- Lead Form -->
-        <div class="lg:pl-8">
+        <div class="lg:sticky lg:top-24">
           <LeadForm />
+        </div>
+      </div>
+    </div>
+    
+    <!-- Wave Divider -->
+    <div class="absolute bottom-0 left-0 right-0">
+      <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+        <path d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="white"/>
+      </svg>
+    </div>
+  </section>
+  
+  <!-- Social Proof Bar -->
+  <section class="bg-white py-8 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-wrap justify-center items-center gap-8 lg:gap-16">
+        <div class="text-center">
+          <p class="text-3xl font-display font-bold text-primary-600">{business.projectsCompleted}</p>
+          <p class="text-sm text-gray-500">Projects Completed</p>
+        </div>
+        <div class="hidden sm:block w-px h-12 bg-gray-200"></div>
+        <div class="text-center">
+          <p class="text-3xl font-display font-bold text-primary-600">{business.yearsExperience}</p>
+          <p class="text-sm text-gray-500">Years Experience</p>
+        </div>
+        <div class="hidden sm:block w-px h-12 bg-gray-200"></div>
+        <div class="text-center">
+          <p class="text-3xl font-display font-bold text-primary-600">{business.satisfactionRate}</p>
+          <p class="text-sm text-gray-500">Satisfaction Rate</p>
+        </div>
+        <div class="hidden sm:block w-px h-12 bg-gray-200"></div>
+        <div class="text-center flex items-center gap-2">
+          <div class="flex">
+            {[1,2,3,4,5].map(() => (
+              <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+              </svg>
+            ))}
+          </div>
+          <span class="text-sm text-gray-500">Google Reviews</span>
         </div>
       </div>
     </div>
   </section>
   
-  <!-- Trust Bar -->
-  <section class="bg-white border-b border-gray-100 py-6">
+  <!-- Introduction Section -->
+  <section class="py-16 lg:py-24 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-display font-bold text-dark-900 mb-6">
+          The Colony's Premier Concrete Contractor for Over 15 Years
+        </h2>
+        <p class="text-xl text-gray-600 leading-relaxed">
+          Welcome to {business.name}, the DFW metroplex's most trusted concrete contractor. Since 2009, we've been transforming properties throughout The Colony, Frisco, Plano, and all of Denton and Collin counties with exceptional concrete work that combines durability, aesthetics, and lasting value.
+        </p>
+      </div>
+      
+      <div class="prose prose-lg max-w-none text-gray-600">
+        <p>
+          As a locally owned and operated business based right here in The Colony, Texas, we understand the unique challenges that our North Texas climate presents for concrete work. From the scorching summer heat that can exceed 105°F to the occasional freeze-thaw cycles in winter, our concrete solutions are specifically engineered to withstand everything that Texas weather throws at them.
+        </p>
+        <p>
+          Our team of experienced concrete professionals has completed over 2,500 projects across the Dallas-Fort Worth area, ranging from residential driveways and backyard patios to commercial parking lots and industrial foundations. Every project receives the same attention to detail, quality materials, and professional craftsmanship that has earned us a reputation as the go-to concrete contractor in The Colony and surrounding communities.
+        </p>
+        <p>
+          What sets {business.name} apart is our commitment to using only premium-grade materials and proven installation techniques. We use 4,000 PSI concrete minimum on all projects, proper rebar or wire mesh reinforcement, and fiber additives for crack resistance. Our crews are trained in proper curing techniques specifically designed for the Texas climate, ensuring your concrete will look great and perform flawlessly for decades.
+        </p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- DFW Local Area Section -->
+  <section class="py-16 lg:py-24 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-        <div class="flex items-center gap-3">
-          <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center">
-            <svg class="w-6 h-6 text-accent" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
-            </svg>
-          </div>
-          <div>
-            <p class="font-semibold text-gray-900">Licensed</p>
-            <p class="text-sm text-gray-500">TX Contractor</p>
-          </div>
-        </div>
-        <div class="flex items-center gap-3">
-          <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center">
-            <svg class="w-6 h-6 text-accent" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
-            </svg>
-          </div>
-          <div>
-            <p class="font-semibold text-gray-900">Insured</p>
-            <p class="text-sm text-gray-500">Full Coverage</p>
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <span class="inline-block bg-primary-100 text-primary-700 px-4 py-1 rounded-full text-sm font-semibold mb-4">Local Experts</span>
+          <h2 class="text-3xl md:text-4xl font-display font-bold text-dark-900 mb-6">
+            Serving The Colony & The Entire DFW Metroplex
+          </h2>
+          <div class="prose prose-lg text-gray-600">
+            <p>
+              The Colony, Texas is one of the fastest-growing communities in the Dallas-Fort Worth metroplex. Located along the shores of Lewisville Lake, our city combines small-town charm with big-city amenities. As The Colony continues to grow with new residential developments, commercial centers, and the popular Grandscape entertainment district, the demand for quality concrete work has never been higher.
+            </p>
+            <p>
+              We're proud to serve not just The Colony, but also neighboring communities including <strong>Frisco</strong>, home to the Dallas Cowboys headquarters and one of America's fastest-growing cities; <strong>Plano</strong>, with its thriving corporate campuses and established neighborhoods; <strong>Lewisville</strong>, our neighbor to the west with its historic downtown and lakeside communities; and <strong>Little Elm</strong>, another lakeside gem experiencing tremendous growth.
+            </p>
+            <p>
+              Our service area extends throughout <strong>Denton County</strong> and <strong>Collin County</strong>, including Carrollton, Flower Mound, Highland Village, Coppell, Allen, McKinney, Prosper, and Celina. Whether you're in an established neighborhood or a brand-new development, we understand the local soil conditions, HOA requirements, and building codes specific to your area.
+            </p>
           </div>
         </div>
-        <div class="flex items-center gap-3">
-          <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center">
-            <svg class="w-6 h-6 text-accent" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
-            </svg>
-          </div>
-          <div>
-            <p class="font-semibold text-gray-900">{business.yearsExperience} Years</p>
-            <p class="text-sm text-gray-500">Experience</p>
-          </div>
-        </div>
-        <div class="flex items-center gap-3">
-          <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center">
-            <svg class="w-6 h-6 text-accent" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
-            </svg>
-          </div>
-          <div>
-            <p class="font-semibold text-gray-900">5-Star</p>
-            <p class="text-sm text-gray-500">Reviews</p>
-          </div>
+        <div class="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+          <h3 class="text-xl font-display font-bold text-dark-900 mb-6">Why DFW Homeowners Choose Us</h3>
+          <ul class="space-y-4">
+            <li class="flex items-start gap-3">
+              <svg class="w-6 h-6 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+              </svg>
+              <span class="text-gray-600"><strong>Texas Climate Expertise:</strong> We understand the expansive clay soil and extreme temperature swings that affect concrete in North Texas</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-6 h-6 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+              </svg>
+              <span class="text-gray-600"><strong>HOA Compliance:</strong> Familiar with Frisco, Plano, and The Colony HOA requirements and approval processes</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-6 h-6 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+              </svg>
+              <span class="text-gray-600"><strong>Permit Handling:</strong> We manage all necessary permits for Denton and Collin County projects</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-6 h-6 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+              </svg>
+              <span class="text-gray-600"><strong>New Construction & Replacement:</strong> Whether you're in a new Frisco development or replacing old concrete in Lewisville</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-6 h-6 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+              </svg>
+              <span class="text-gray-600"><strong>Local References:</strong> We can provide references from neighbors in your community</span>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
   </section>
   
   <!-- Services Section -->
-  <section class="py-20 bg-gray-50">
+  <section class="py-16 lg:py-24 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16">
-        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Our Concrete Services</h2>
+        <span class="inline-block bg-primary-100 text-primary-700 px-4 py-1 rounded-full text-sm font-semibold mb-4">What We Do</span>
+        <h2 class="text-3xl md:text-4xl font-display font-bold text-dark-900 mb-4">Professional Concrete Services in The Colony, TX</h2>
         <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-          From residential driveways to commercial projects, we deliver quality concrete work that lasts.
+          From residential projects to commercial construction, we offer a full range of concrete services backed by our quality guarantee.
         </p>
       </div>
       
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {services.map(service => (
-          <a href={`/services/${service.slug}/`} class="bg-white rounded-xl p-6 shadow-sm hover:shadow-lg transition group">
-            <div class="text-4xl mb-4">{service.icon}</div>
-            <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-accent transition">{service.name}</h3>
+        {services.map((service, index) => (
+          <a href={`/services/${service.slug}/`} class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 group border border-gray-100 hover:border-accent/20 card-hover">
+            <div class="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 group-hover:bg-accent/10 transition-all">
+              {service.icon}
+            </div>
+            <h3 class="text-xl font-display font-bold text-dark-900 mb-3 group-hover:text-primary-600 transition">{service.name}</h3>
             <p class="text-gray-600 mb-4">{service.description}</p>
-            <span class="text-accent font-semibold flex items-center gap-2 group-hover:gap-3 transition-all">
-              Learn More
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-              </svg>
-            </span>
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-gray-500">{service.priceRange}</span>
+              <span class="text-accent font-semibold flex items-center gap-2 group-hover:gap-3 transition-all">
+                Learn More
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+              </span>
+            </div>
           </a>
         ))}
+      </div>
+      
+      <!-- Detailed Services Info -->
+      <div class="mt-16 bg-white rounded-2xl p-8 lg:p-12 border border-gray-100">
+        <h3 class="text-2xl font-display font-bold text-dark-900 mb-6 text-center">Comprehensive Concrete Solutions for Every Need</h3>
+        <div class="grid md:grid-cols-2 gap-8">
+          <div>
+            <h4 class="font-bold text-dark-900 mb-3 flex items-center gap-2">
+              <span class="text-accent">▸</span> Residential Concrete Services
+            </h4>
+            <p class="text-gray-600 mb-4">
+              Your home deserves concrete work that's both beautiful and built to last. Our residential services include new driveway installation, driveway replacement and repair, backyard patios and outdoor living spaces, pool decks with slip-resistant finishes, sidewalks and walkways, and decorative concrete options including stamped, stained, and exposed aggregate finishes. We work with homeowners throughout The Colony, Frisco, Plano, and Lewisville to create outdoor spaces that enhance curb appeal and property value.
+            </p>
+            <h4 class="font-bold text-dark-900 mb-3 flex items-center gap-2">
+              <span class="text-accent">▸</span> Commercial Concrete Services
+            </h4>
+            <p class="text-gray-600">
+              From retail parking lots in Frisco to warehouse floors in Lewisville, we handle commercial concrete projects of all sizes. Our commercial services include parking lot installation and repair, loading docks, commercial building foundations, ADA-compliant sidewalks and ramps, and industrial flooring. We understand the importance of minimizing business disruption and work efficiently to complete projects on schedule.
+            </p>
+          </div>
+          <div>
+            <h4 class="font-bold text-dark-900 mb-3 flex items-center gap-2">
+              <span class="text-accent">▸</span> Concrete Repair & Restoration
+            </h4>
+            <p class="text-gray-600 mb-4">
+              Texas weather takes a toll on concrete. The combination of intense summer heat, winter freezes, and our clay-heavy soil causes cracking, settling, and surface damage over time. Our repair services include crack filling and sealing, concrete leveling and mudjacking, surface resurfacing and overlay, expansion joint repair, and complete section replacement when needed. We'll assess your concrete honestly and recommend the most cost-effective solution.
+            </p>
+            <h4 class="font-bold text-dark-900 mb-3 flex items-center gap-2">
+              <span class="text-accent">▸</span> Decorative Concrete Options
+            </h4>
+            <p class="text-gray-600">
+              Gone are the days when concrete meant boring gray slabs. Today's decorative concrete options let you create stunning outdoor spaces that rival natural stone at a fraction of the cost. Choose from stamped concrete patterns that mimic brick, slate, or flagstone; acid staining for rich, variegated colors; exposed aggregate for a natural pebble finish; or colored concrete to match your home's exterior. Our decorative concrete is especially popular for patios, pool decks, and driveways in upscale Frisco and Plano neighborhoods.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Trust & Credentials Section -->
+  <section class="py-16 lg:py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <span class="inline-block bg-green-100 text-green-700 px-4 py-1 rounded-full text-sm font-semibold mb-4">Trust & Credentials</span>
+        <h2 class="text-3xl md:text-4xl font-display font-bold text-dark-900 mb-4">Licensed, Insured & Committed to Excellence</h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          When you hire {business.name}, you're hiring a team that takes professionalism seriously. We're fully licensed and insured, protecting both you and your property.
+        </p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-gray-50 rounded-2xl p-6 text-center border border-gray-100">
+          <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+            </svg>
+          </div>
+          <h3 class="font-bold text-dark-900 mb-2">Fully Licensed</h3>
+          <p class="text-sm text-gray-600">Licensed to operate throughout Texas with all required state and local permits</p>
+        </div>
+        <div class="bg-gray-50 rounded-2xl p-6 text-center border border-gray-100">
+          <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+            </svg>
+          </div>
+          <h3 class="font-bold text-dark-900 mb-2">Fully Insured</h3>
+          <p class="text-sm text-gray-600">$2M liability coverage and workers' compensation protects you and our team</p>
+        </div>
+        <div class="bg-gray-50 rounded-2xl p-6 text-center border border-gray-100">
+          <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-yellow-600" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+            </svg>
+          </div>
+          <h3 class="font-bold text-dark-900 mb-2">5-Star Rated</h3>
+          <p class="text-sm text-gray-600">Consistently 5-star reviews on Google, Yelp, and the Better Business Bureau</p>
+        </div>
+        <div class="bg-gray-50 rounded-2xl p-6 text-center border border-gray-100">
+          <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-purple-600" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+            </svg>
+          </div>
+          <h3 class="font-bold text-dark-900 mb-2">Written Warranties</h3>
+          <p class="text-sm text-gray-600">Every project comes with a written warranty covering materials and workmanship</p>
+        </div>
+      </div>
+      
+      <div class="mt-12 bg-primary-50 rounded-2xl p-8 border border-primary-100">
+        <div class="flex flex-col md:flex-row items-center gap-6">
+          <div class="flex-shrink-0">
+            <div class="w-20 h-20 bg-primary-600 rounded-full flex items-center justify-center">
+              <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-dark-900 mb-2">Our Quality Guarantee</h3>
+            <p class="text-gray-600">
+              We stand behind every pour. If you're not completely satisfied with your concrete work, we'll make it right—no questions asked. That's the {business.name} promise. With over {business.projectsCompleted} successful projects completed across The Colony, Frisco, Plano, Lewisville, and the entire DFW metroplex, our reputation is built on delivering results that exceed expectations.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Why Choose Us -->
+  <section class="py-16 lg:py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <div>
+          <span class="inline-block bg-accent/10 text-accent px-4 py-1 rounded-full text-sm font-semibold mb-4">Why Choose Us</span>
+          <h2 class="text-3xl md:text-4xl font-display font-bold text-dark-900 mb-6">
+            The DFW Concrete Experts You Can Trust
+          </h2>
+          <p class="text-xl text-gray-600 mb-8">
+            When you choose {business.name}, you're choosing a partner committed to excellence, transparency, and your complete satisfaction.
+          </p>
+          
+          <div class="space-y-6">
+            <div class="flex gap-4">
+              <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="font-bold text-dark-900 mb-1">Local Expertise, Texas Tough</h3>
+                <p class="text-gray-600">We understand Denton County's unique soil conditions, climate challenges, and building codes. Our concrete is engineered for Texas.</p>
+              </div>
+            </div>
+            
+            <div class="flex gap-4">
+              <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="font-bold text-dark-900 mb-1">Transparent, Fair Pricing</h3>
+                <p class="text-gray-600">No hidden fees, no surprise charges. We provide detailed written estimates and stand behind our quotes.</p>
+              </div>
+            </div>
+            
+            <div class="flex gap-4">
+              <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="font-bold text-dark-900 mb-1">Premium Materials Only</h3>
+                <p class="text-gray-600">We use 4,000 PSI concrete minimum, quality rebar reinforcement, and professional-grade sealers for long-lasting results.</p>
+              </div>
+            </div>
+            
+            <div class="flex gap-4">
+              <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="font-bold text-dark-900 mb-1">On-Time Project Completion</h3>
+                <p class="text-gray-600">We respect your time and property. Our experienced crews work efficiently to complete projects on schedule.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-primary-600 rounded-3xl p-8 lg:p-12 text-white relative overflow-hidden">
+          <div class="pattern-overlay absolute inset-0"></div>
+          <div class="relative">
+            <h3 class="text-2xl font-display font-bold mb-6">Ready to Get Started?</h3>
+            <p class="text-primary-100 mb-8">
+              Get a free, no-obligation quote for your concrete project. Our team typically responds within 2 hours during business hours.
+            </p>
+            <div class="space-y-4">
+              <a href={`tel:${business.phoneTel}`} class="flex items-center justify-center gap-3 bg-accent hover:bg-accent-dark text-white px-6 py-4 rounded-xl font-bold text-lg transition w-full">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                </svg>
+                Call {business.phone}
+              </a>
+              <a href="/contact/" class="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white px-6 py-4 rounded-xl font-bold transition w-full border border-white/20">
+                Request Online Quote
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
   
   <!-- Process Section -->
-  <section class="py-20 bg-white">
+  <section class="py-16 lg:py-24 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16">
-        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Simple & Hassle-Free Process</h2>
-        <p class="text-xl text-gray-600">From consultation to completion, we make it easy</p>
+        <span class="inline-block bg-primary-100 text-primary-700 px-4 py-1 rounded-full text-sm font-semibold mb-4">How It Works</span>
+        <h2 class="text-3xl md:text-4xl font-display font-bold text-dark-900 mb-4">Simple, Hassle-Free Process</h2>
+        <p class="text-xl text-gray-600">From consultation to completion, we make concrete work easy</p>
       </div>
       
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="text-center">
-          <div class="w-16 h-16 bg-accent text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6">1</div>
-          <h3 class="text-xl font-bold text-gray-900 mb-3">Schedule Consultation</h3>
-          <p class="text-gray-600">Fill out the quote form or give us a call to schedule your free on-site consultation.</p>
+      <div class="grid md:grid-cols-4 gap-8">
+        <div class="text-center relative">
+          <div class="w-20 h-20 bg-primary-600 text-white rounded-2xl flex items-center justify-center text-3xl font-display font-bold mx-auto mb-6 shadow-lg">1</div>
+          <h3 class="text-xl font-bold text-dark-900 mb-3">Free Consultation</h3>
+          <p class="text-gray-600">Call or fill out our form. We'll schedule a convenient time to visit your property and discuss your project.</p>
+          <div class="hidden md:block absolute top-10 left-[60%] w-[80%] border-t-2 border-dashed border-gray-300"></div>
+        </div>
+        <div class="text-center relative">
+          <div class="w-20 h-20 bg-primary-600 text-white rounded-2xl flex items-center justify-center text-3xl font-display font-bold mx-auto mb-6 shadow-lg">2</div>
+          <h3 class="text-xl font-bold text-dark-900 mb-3">Detailed Quote</h3>
+          <p class="text-gray-600">We assess your needs and provide a comprehensive written quote with transparent pricing—no surprises.</p>
+          <div class="hidden md:block absolute top-10 left-[60%] w-[80%] border-t-2 border-dashed border-gray-300"></div>
+        </div>
+        <div class="text-center relative">
+          <div class="w-20 h-20 bg-primary-600 text-white rounded-2xl flex items-center justify-center text-3xl font-display font-bold mx-auto mb-6 shadow-lg">3</div>
+          <h3 class="text-xl font-bold text-dark-900 mb-3">Expert Installation</h3>
+          <p class="text-gray-600">Our skilled crews arrive on time with professional equipment and complete your project efficiently.</p>
+          <div class="hidden md:block absolute top-10 left-[60%] w-[80%] border-t-2 border-dashed border-gray-300"></div>
         </div>
         <div class="text-center">
-          <div class="w-16 h-16 bg-accent text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6">2</div>
-          <h3 class="text-xl font-bold text-gray-900 mb-3">Get Your Quote</h3>
-          <p class="text-gray-600">We'll assess your project and provide a detailed, transparent quote with no hidden fees.</p>
-        </div>
-        <div class="text-center">
-          <div class="w-16 h-16 bg-accent text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6">3</div>
-          <h3 class="text-xl font-bold text-gray-900 mb-3">Get Started</h3>
-          <p class="text-gray-600">We agree on a timeline and our expert crew gets to work transforming your property.</p>
+          <div class="w-20 h-20 bg-accent text-white rounded-2xl flex items-center justify-center text-3xl font-display font-bold mx-auto mb-6 shadow-lg">4</div>
+          <h3 class="text-xl font-bold text-dark-900 mb-3">Final Walkthrough</h3>
+          <p class="text-gray-600">We walk through the completed project together, ensuring you're 100% satisfied with the results.</p>
         </div>
       </div>
     </div>
   </section>
   
-  <!-- Service Areas -->
-  <section class="py-20 bg-gray-50">
+  <!-- Reviews Section -->
+  <section class="py-16 lg:py-24 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16">
-        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Areas We Serve</h2>
-        <p class="text-xl text-gray-600">Proudly serving The Colony and the DFW metroplex</p>
+        <span class="inline-block bg-yellow-100 text-yellow-700 px-4 py-1 rounded-full text-sm font-semibold mb-4">Customer Reviews</span>
+        <h2 class="text-3xl md:text-4xl font-display font-bold text-dark-900 mb-4">What Our Customers Say</h2>
+        <div class="flex items-center justify-center gap-2 mb-4">
+          <div class="flex">
+            {[1,2,3,4,5].map(() => (
+              <svg class="w-6 h-6 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+              </svg>
+            ))}
+          </div>
+          <span class="text-lg font-semibold text-dark-900">4.9 out of 5</span>
+          <span class="text-gray-500">based on 127 reviews</span>
+        </div>
       </div>
       
-      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-        {locations.map(location => (
-          <a href={`/locations/${location.slug}/`} class="bg-white rounded-lg px-4 py-3 text-center hover:bg-accent hover:text-white transition shadow-sm">
-            {location.name}
-          </a>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {reviews.map(review => (
+          <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+            <div class="flex items-center gap-1 mb-4">
+              {[...Array(review.rating)].map(() => (
+                <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                </svg>
+              ))}
+            </div>
+            <p class="text-gray-600 mb-4 italic">"{review.text}"</p>
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="font-semibold text-dark-900">{review.name}</p>
+                <p class="text-sm text-gray-500">{review.location}</p>
+              </div>
+              <span class="text-xs bg-primary-100 text-primary-700 px-2 py-1 rounded-full">{review.service}</span>
+            </div>
+          </div>
         ))}
       </div>
     </div>
   </section>
   
+  <!-- Service Areas -->
+  <section class="py-16 lg:py-24 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <span class="inline-block bg-primary-100 text-primary-700 px-4 py-1 rounded-full text-sm font-semibold mb-4">Service Areas</span>
+        <h2 class="text-3xl md:text-4xl font-display font-bold text-dark-900 mb-4">Proudly Serving The Colony & DFW Metroplex</h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          We serve homeowners and businesses throughout Denton County, Collin County, and the greater Dallas-Fort Worth area. Our crews travel up to an hour from The Colony for all concrete projects.
+        </p>
+      </div>
+      
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+        {topLocations.map(location => (
+          <a href={`/locations/${location.slug}/`} class={`rounded-xl px-4 py-3 text-center transition font-medium border ${location.primary ? 'bg-primary-600 text-white border-primary-600 hover:bg-primary-700' : 'bg-white text-gray-700 border-gray-200 hover:bg-primary-50 hover:text-primary-600 hover:border-primary-200'}`}>
+            {location.name}
+          </a>
+        ))}
+      </div>
+      
+      <div class="text-center mt-8">
+        <a href="/locations/" class="inline-flex items-center gap-2 text-primary-600 hover:text-primary-700 font-semibold transition">
+          View All 30+ Service Areas
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+  
   <!-- FAQ Section -->
-  <section class="py-20 bg-white">
+  <section class="py-16 lg:py-24 bg-white">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16">
-        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
-        <p class="text-xl text-gray-600">Everything you need to know about our concrete services</p>
+        <span class="inline-block bg-primary-100 text-primary-700 px-4 py-1 rounded-full text-sm font-semibold mb-4">FAQ</span>
+        <h2 class="text-3xl md:text-4xl font-display font-bold text-dark-900 mb-4">Frequently Asked Questions</h2>
+        <p class="text-xl text-gray-600">Everything you need to know about concrete work in Texas</p>
       </div>
       
       <div class="space-y-4">
         {faqs.map((faq, i) => (
-          <details class="bg-gray-50 rounded-lg group" open={i === 0}>
-            <summary class="p-6 cursor-pointer font-semibold text-lg text-gray-900 flex justify-between items-center list-none">
+          <details class="bg-gray-50 rounded-xl group border border-gray-100" open={i === 0}>
+            <summary class="p-6 cursor-pointer font-semibold text-lg text-dark-900 flex justify-between items-center hover:text-primary-600 transition">
               {faq.question}
-              <svg class="w-5 h-5 text-gray-500 transition group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-5 h-5 text-gray-400 transition group-open:rotate-180 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
               </svg>
             </summary>
-            <div class="px-6 pb-6 text-gray-600">
+            <div class="px-6 pb-6 text-gray-600 leading-relaxed">
               {faq.answer}
             </div>
           </details>
@@ -239,32 +599,46 @@ const faqSchema = {
   </section>
   
   <!-- Final CTA -->
-  <section class="py-20 bg-gradient-to-br from-dark-800 to-dark-900 text-white">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Get Started?</h2>
-      <p class="text-xl text-gray-300 mb-8">
-        Get a free, no-obligation quote for your concrete project today.
+  <section class="py-16 lg:py-24 bg-texas relative overflow-hidden pattern-overlay">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
+      <h2 class="text-3xl md:text-4xl font-display font-bold text-white mb-6">Ready to Start Your Concrete Project?</h2>
+      <p class="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
+        Get a free, no-obligation estimate from The Colony's most trusted concrete contractor. We respond within 2 hours during business hours.
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href={`tel:${business.phoneTel}`} class="inline-flex items-center justify-center gap-2 bg-accent hover:bg-accent-dark text-white px-8 py-4 rounded-lg font-bold text-lg transition">
+        <a href={`tel:${business.phoneTel}`} class="inline-flex items-center justify-center gap-3 bg-accent hover:bg-accent-dark text-white px-8 py-4 rounded-xl font-bold text-lg transition shadow-lg hover:shadow-xl">
           <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
             <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
           </svg>
           Call {business.phone}
         </a>
-        <a href="/contact/" class="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white px-8 py-4 rounded-lg font-bold text-lg transition border border-white/20">
+        <a href="/contact/" class="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white px-8 py-4 rounded-xl font-bold text-lg transition border border-white/20">
           Request Online Quote
         </a>
+      </div>
+      
+      <div class="mt-12 flex flex-wrap justify-center gap-8 text-white/80 text-sm">
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+          </svg>
+          Free Estimates
+        </div>
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+          </svg>
+          Same-Week Service Available
+        </div>
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+          </svg>
+          Financing Options
+        </div>
       </div>
     </div>
   </section>
   
   <Footer />
 </Layout>
-
-<style>
-  /* Remove default details marker */
-  details > summary::-webkit-details-marker {
-    display: none;
-  }
-</style>

@@ -3,7 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import LeadForm from '../../components/LeadForm.astro';
-import { business, services, locations } from '../../data/business';
+import { business, services, locations, faqs } from '../../data/business';
 
 export async function getStaticPaths() {
   return locations.map(location => ({
@@ -14,141 +14,330 @@ export async function getStaticPaths() {
 
 const { location } = Astro.props;
 const isPrimary = location.primary === true;
+
+// Get nearby locations (excluding current)
+const nearbyLocations = locations.filter(l => l.slug !== location.slug).slice(0, 10);
+
+// Location-specific FAQ schema
+const localFaqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": `How much does concrete work cost in ${location.name}, TX?`,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": `Concrete costs in ${location.name} typically range from $8-$18 per square foot for driveways, $10-$25 for patios, and $12-$30 for stamped decorative concrete. For an accurate estimate, call ${business.phone} for a free quote.`
+      }
+    },
+    {
+      "@type": "Question",
+      "name": `Do you serve ${location.name}, Texas?`,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": `Yes! ${business.name} proudly serves ${location.name}, TX and all surrounding areas. We're based in The Colony, just ${location.distance || 'a short drive'} away.`
+      }
+    }
+  ]
+};
 ---
 
 <Layout 
-  title={`Concrete Contractors ${location.name}, TX | ${business.name}`}
-  description={`Professional concrete contractors serving ${location.name}, TX. Driveways, patios, foundations & more. Free estimates! Call ${business.phone}`}
+  title={`Concrete Contractors ${location.name}, TX | ${business.name} | Free Estimates`}
+  description={`Professional concrete contractors serving ${location.name}, Texas. Driveways, patios, foundations, stamped concrete & more. ${business.yearsExperience} years experience. Free estimates! Call ${business.phone}`}
   canonical={`/locations/${location.slug}/`}
+  schema={localFaqSchema}
 >
   <Header />
   
-  <!-- Hero -->
-  <section class="bg-gradient-to-br from-dark-800 to-dark-900 py-16 lg:py-24">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid lg:grid-cols-2 gap-12 items-center">
+  <!-- Hero Section -->
+  <section class="bg-texas relative overflow-hidden pattern-overlay">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20 relative">
+      <div class="grid lg:grid-cols-2 gap-12 items-start">
+        
+        <!-- Hero Content -->
         <div class="text-white">
-          <a href="/locations/" class="text-accent hover:text-accent-light mb-4 inline-block">&larr; All Locations</a>
-          <h1 class="text-4xl md:text-5xl font-bold mb-6">
-            Concrete Contractors in {location.name}, TX
+          <a href="/locations/" class="inline-flex items-center gap-2 text-primary-200 hover:text-white mb-6 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+            All Service Areas
+          </a>
+          
+          <!-- Location Badge -->
+          <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur border border-white/20 px-4 py-2 rounded-full text-sm mb-6">
+            <svg class="w-4 h-4 text-accent" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+            </svg>
+            <span>{location.county} • {location.distance || 'Local'} from The Colony</span>
+          </div>
+          
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-tight mb-6">
+            Concrete Contractors in <span class="text-accent">{location.name}</span>, Texas
           </h1>
-          <p class="text-xl text-gray-300 mb-8">
-            {business.name} provides professional concrete services to homeowners and businesses in {location.name}, Texas. From driveways to foundations, we deliver quality workmanship backed by {business.yearsExperience} years of experience.
+          
+          <p class="text-xl text-gray-200 mb-8 leading-relaxed">
+            {business.name} provides professional concrete services to homeowners and businesses throughout {location.name} and {location.county}. From driveways and patios to foundations and commercial work, our experienced team delivers quality craftsmanship backed by {business.yearsExperience} years of local expertise.
           </p>
           
+          <!-- Trust Badges -->
           <div class="flex flex-wrap gap-4 mb-8">
-            <div class="flex items-center gap-2 text-gray-300">
-              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 24 24">
+            <div class="flex items-center gap-2 bg-white/10 backdrop-blur rounded-lg px-3 py-2">
+              <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
               </svg>
-              Licensed & Insured
+              <span class="text-sm font-medium">Licensed & Insured</span>
             </div>
-            <div class="flex items-center gap-2 text-gray-300">
-              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+            <div class="flex items-center gap-2 bg-white/10 backdrop-blur rounded-lg px-3 py-2">
+              <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
               </svg>
-              Free Estimates
+              <span class="text-sm font-medium">5-Star Rated</span>
+            </div>
+            <div class="flex items-center gap-2 bg-white/10 backdrop-blur rounded-lg px-3 py-2">
+              <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+              </svg>
+              <span class="text-sm font-medium">{business.yearsExperience} Experience</span>
             </div>
           </div>
           
-          <a href={`tel:${business.phoneTel}`} class="inline-flex items-center gap-2 bg-accent hover:bg-accent-dark text-white px-6 py-3 rounded-lg font-bold transition">
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <!-- Phone CTA -->
+          <a href={`tel:${business.phoneTel}`} class="inline-flex items-center gap-3 bg-accent hover:bg-accent-dark text-white px-8 py-4 rounded-xl font-bold text-lg transition shadow-lg hover:shadow-xl">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
               <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
             </svg>
-            {business.phone}
+            Call {business.phone}
           </a>
         </div>
-        <div>
+        
+        <!-- Lead Form -->
+        <div class="lg:sticky lg:top-24">
           <LeadForm title={`Get a Free Quote in ${location.name}`} />
         </div>
       </div>
     </div>
   </section>
   
+  <!-- About Location Section -->
+  <section class="py-16 lg:py-24 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl md:text-4xl font-display font-bold text-dark-900 mb-6 text-center">
+        Professional Concrete Services in {location.name}, TX
+      </h2>
+      
+      <div class="prose prose-lg max-w-none text-gray-600">
+        <p>
+          {location.description} As one of the fastest-growing areas in the DFW metroplex, {location.name} homeowners and businesses deserve a concrete contractor who understands the unique needs of the community.
+        </p>
+        
+        <p>
+          {business.name} has been proudly serving {location.name} and the surrounding {location.county} area for over 15 years. Our experienced crews have completed hundreds of residential and commercial concrete projects throughout {location.name}, from new construction driveways in {location.landmarks?.[0] || 'local developments'} to patio installations and foundation work across all neighborhoods.
+        </p>
+        
+        <p>
+          What makes concrete work in {location.name} unique? The expansive clay soils common throughout {location.county} require specialized preparation and reinforcement techniques to prevent shifting and cracking. Our team understands these local soil conditions and builds every project to withstand them, using 4,000 PSI concrete, proper rebar reinforcement, and appropriate control joint spacing designed specifically for North Texas conditions.
+        </p>
+        
+        <p>
+          Whether you're looking to enhance your curb appeal with a new decorative driveway, create an outdoor entertaining space with a stamped concrete patio, or need reliable foundation work for new construction, {business.name} delivers the quality craftsmanship that {location.name} residents expect. We take pride in treating every property—from starter homes to luxury estates—with the same attention to detail and professional service.
+        </p>
+        
+        <h3 class="text-2xl font-display font-bold text-dark-900 mt-12 mb-4">Why {location.name} Homeowners Choose Us</h3>
+        
+        <p>
+          As a locally-owned company based just {location.distance || 'minutes'} away in The Colony, we're deeply invested in the {location.name} community. Our reputation has been built on word-of-mouth referrals from satisfied customers throughout {location.county}, and we work hard to maintain the trust our neighbors place in us.
+        </p>
+        
+        <p>
+          Every concrete project in {location.name} includes our comprehensive approach: thorough site evaluation and preparation, premium materials including 4,000 PSI concrete and quality reinforcement, expert installation by trained crews, proper finishing and curing techniques for the Texas climate, and a final walkthrough to ensure your complete satisfaction.
+        </p>
+        
+        {location.zipCodes && (
+          <p>
+            We serve all {location.name} ZIP codes including {location.zipCodes.join(', ')}, providing fast response times and convenient scheduling for your concrete project. Most estimates can be scheduled within 24-48 hours, and we often have availability for projects starting within 1-2 weeks.
+          </p>
+        )}
+      </div>
+    </div>
+  </section>
+  
   <!-- Services in Location -->
-  <section class="py-16 bg-white">
+  <section class="py-16 lg:py-24 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-3xl font-bold text-center mb-12">Concrete Services in {location.name}</h2>
+      <div class="text-center mb-16">
+        <span class="inline-block bg-primary-100 text-primary-700 px-4 py-1 rounded-full text-sm font-semibold mb-4">Our Services</span>
+        <h2 class="text-3xl md:text-4xl font-display font-bold text-dark-900 mb-4">Concrete Services in {location.name}</h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          Full-service concrete contractor offering residential and commercial solutions throughout {location.name} and {location.county}.
+        </p>
+      </div>
+      
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {services.map(service => (
-          <a href={`/services/${service.slug}/`} class="bg-gray-50 rounded-xl p-6 hover:shadow-lg transition group">
-            <span class="text-4xl mb-4 block">{service.icon}</span>
-            <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-accent transition">{service.name}</h3>
-            <p class="text-gray-600 text-sm">{service.description}</p>
+          <a href={`/services/${service.slug}/`} class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 group border border-gray-100 hover:border-accent/20 card-hover">
+            <div class="w-14 h-14 bg-primary-100 rounded-xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 group-hover:bg-accent/10 transition-all">
+              {service.icon}
+            </div>
+            <h3 class="text-xl font-bold text-dark-900 mb-3 group-hover:text-primary-600 transition">{service.name}</h3>
+            <p class="text-gray-600 text-sm mb-4">{service.description}</p>
+            <div class="flex items-center justify-between text-sm">
+              <span class="text-gray-500">{service.priceRange}</span>
+              <span class="text-accent font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">
+                Details
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+              </span>
+            </div>
           </a>
         ))}
       </div>
     </div>
   </section>
   
-  <!-- Why Choose Us -->
-  <section class="py-16 bg-gray-50">
+  <!-- Why Choose Us for Location -->
+  <section class="py-16 lg:py-24 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-3xl font-bold text-center mb-12">Why {location.name} Residents Choose Us</h2>
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-display font-bold text-dark-900 mb-4">
+          Why {location.name} Residents Trust {business.shortName}
+        </h2>
+        <p class="text-xl text-gray-600">Local expertise, quality materials, and exceptional service</p>
+      </div>
+      
       <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
         <div class="text-center">
-          <div class="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg class="w-8 h-8 text-accent" fill="currentColor" viewBox="0 0 24 24">
+          <div class="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+            <svg class="w-8 h-8 text-primary-600" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
             </svg>
           </div>
-          <h3 class="font-bold text-lg mb-2">Local Knowledge</h3>
-          <p class="text-gray-600 text-sm">We know {location.name} soil conditions and building requirements.</p>
+          <h3 class="font-bold text-lg text-dark-900 mb-2">Local to {location.county}</h3>
+          <p class="text-gray-600 text-sm">We know {location.name}'s soil conditions, building codes, and what it takes to build concrete that lasts here.</p>
         </div>
         <div class="text-center">
-          <div class="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg class="w-8 h-8 text-accent" fill="currentColor" viewBox="0 0 24 24">
+          <div class="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+            <svg class="w-8 h-8 text-primary-600" fill="currentColor" viewBox="0 0 24 24">
               <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
               <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
             </svg>
           </div>
-          <h3 class="font-bold text-lg mb-2">Fast Response</h3>
-          <p class="text-gray-600 text-sm">Quick estimates and timely project completion.</p>
+          <h3 class="font-bold text-lg text-dark-900 mb-2">Fast Response</h3>
+          <p class="text-gray-600 text-sm">Most estimates scheduled within 24 hours. We're just {location.distance || 'minutes'} away and ready to help.</p>
         </div>
         <div class="text-center">
-          <div class="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg class="w-8 h-8 text-accent" fill="currentColor" viewBox="0 0 24 24">
+          <div class="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+            <svg class="w-8 h-8 text-primary-600" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
             </svg>
           </div>
-          <h3 class="font-bold text-lg mb-2">Fully Insured</h3>
-          <p class="text-gray-600 text-sm">Complete liability and workers compensation coverage.</p>
+          <h3 class="font-bold text-lg text-dark-900 mb-2">Fully Insured</h3>
+          <p class="text-gray-600 text-sm">Complete liability and workers compensation coverage protects you and your property.</p>
         </div>
         <div class="text-center">
-          <div class="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg class="w-8 h-8 text-accent" fill="currentColor" viewBox="0 0 24 24">
+          <div class="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+            <svg class="w-8 h-8 text-primary-600" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
             </svg>
           </div>
-          <h3 class="font-bold text-lg mb-2">Quality Work</h3>
-          <p class="text-gray-600 text-sm">Superior materials and craftsmanship on every project.</p>
+          <h3 class="font-bold text-lg text-dark-900 mb-2">Quality Guaranteed</h3>
+          <p class="text-gray-600 text-sm">Premium materials, expert installation, and our satisfaction guarantee on every project.</p>
         </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Local Content Section -->
+  <section class="py-16 lg:py-24 bg-gray-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-display font-bold text-dark-900 mb-8 text-center">
+        Concrete Work Considerations for {location.name} Properties
+      </h2>
+      
+      <div class="prose prose-lg max-w-none text-gray-600">
+        <h3 class="text-xl font-display font-bold text-dark-900 mt-8 mb-4">Understanding {location.county} Soil Conditions</h3>
+        <p>
+          {location.name} sits in an area known for expansive clay soils that can cause significant challenges for concrete work. These soils expand when wet and contract when dry, putting tremendous stress on concrete surfaces. Without proper preparation, this movement leads to cracking, heaving, and premature failure of concrete installations.
+        </p>
+        <p>
+          Our {location.name} concrete projects include thorough soil preparation: we excavate to proper depth, install compacted base material, and use reinforcement designed to handle soil movement. For areas with particularly challenging soil conditions, we may recommend pier-supported slabs or other specialized solutions.
+        </p>
+        
+        <h3 class="text-xl font-display font-bold text-dark-900 mt-8 mb-4">Concrete Costs in {location.name}, TX</h3>
+        <p>
+          Concrete prices in {location.name} reflect the DFW market, with costs influenced by material prices, labor, site conditions, and project complexity. Current typical pricing ranges:
+        </p>
+        <ul>
+          <li><strong>Basic Concrete Driveways:</strong> $8-$12 per square foot</li>
+          <li><strong>Stamped/Decorative Driveways:</strong> $12-$18 per square foot</li>
+          <li><strong>Concrete Patios:</strong> $10-$25 per square foot depending on finish</li>
+          <li><strong>Stamped Concrete:</strong> $12-$30 per square foot</li>
+          <li><strong>Concrete Removal:</strong> $2-$4 per square foot</li>
+        </ul>
+        <p>
+          These are estimates only. Your specific project cost depends on size, complexity, site access, existing conditions, and finish options. Contact us for a free, detailed quote for your {location.name} property.
+        </p>
+        
+        <h3 class="text-xl font-display font-bold text-dark-900 mt-8 mb-4">Best Time for Concrete Work in {location.name}</h3>
+        <p>
+          North Texas weather allows for year-round concrete work, but spring (March-May) and fall (September-November) offer ideal conditions. Summer projects require early morning starts and special curing techniques due to heat, while winter work may need to pause during freezing temperatures.
+        </p>
+        <p>
+          We recommend booking your {location.name} concrete project 2-4 weeks in advance, especially during peak spring and fall seasons when our schedule fills quickly.
+        </p>
       </div>
     </div>
   </section>
   
   <!-- Nearby Cities -->
-  <section class="py-16 bg-white">
+  <section class="py-16 lg:py-24 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-3xl font-bold text-center mb-12">Also Serving Nearby Cities</h2>
-      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-        {locations.filter(l => l.slug !== location.slug).slice(0, 10).map(loc => (
-          <a href={`/locations/${loc.slug}/`} class="bg-gray-50 rounded-lg px-4 py-3 text-center hover:bg-accent hover:text-white transition">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-display font-bold text-dark-900 mb-4">Also Serving Nearby Cities</h2>
+        <p class="text-gray-600">Professional concrete services throughout the DFW metroplex</p>
+      </div>
+      
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+        {nearbyLocations.map(loc => (
+          <a href={`/locations/${loc.slug}/`} class="bg-gray-50 rounded-xl px-4 py-3 text-center hover:bg-primary-50 hover:text-primary-600 transition font-medium text-gray-700 border border-gray-100 hover:border-primary-200">
             {loc.name}
           </a>
         ))}
       </div>
+      
+      <div class="text-center mt-8">
+        <a href="/locations/" class="inline-flex items-center gap-2 text-primary-600 hover:text-primary-700 font-semibold transition">
+          View All Service Areas
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
     </div>
   </section>
   
-  <!-- CTA -->
-  <section class="py-16 bg-accent">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-      <h2 class="text-3xl font-bold mb-4">Ready for Your {location.name} Project?</h2>
-      <p class="text-xl opacity-90 mb-8">Get a free quote from local concrete experts today.</p>
-      <a href={`tel:${business.phoneTel}`} class="inline-flex items-center gap-2 bg-white text-accent hover:bg-gray-100 px-8 py-4 rounded-lg font-bold text-lg transition">
-        Call {business.phone}
-      </a>
+  <!-- CTA Section -->
+  <section class="py-16 lg:py-24 bg-texas pattern-overlay relative">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
+      <h2 class="text-3xl md:text-4xl font-display font-bold text-white mb-6">
+        Ready to Start Your {location.name} Concrete Project?
+      </h2>
+      <p class="text-xl text-primary-100 mb-8">
+        Get a free, no-obligation quote from {location.name}'s trusted concrete contractor. We respond within 2 hours during business hours.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href={`tel:${business.phoneTel}`} class="inline-flex items-center justify-center gap-3 bg-accent hover:bg-accent-dark text-white px-8 py-4 rounded-xl font-bold text-lg transition shadow-lg hover:shadow-xl">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+          </svg>
+          Call {business.phone}
+        </a>
+        <a href="/contact/" class="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white px-8 py-4 rounded-xl font-bold text-lg transition border border-white/20">
+          Request Online Quote
+        </a>
+      </div>
     </div>
   </section>
   
