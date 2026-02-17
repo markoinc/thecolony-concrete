@@ -296,7 +296,7 @@ for loc in "${LOCATIONS[@]}"; do
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 ${COMPANY}. All rights reserved. | <a href="/locations/">All Locations</a></p>
+                <p>&copy; 2025 ${COMPANY}. All rights reserved. | <a href="/locations/">All Locations</a></p>
             </div>
         </div>
     </footer>
