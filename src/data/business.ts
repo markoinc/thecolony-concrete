@@ -3,6 +3,7 @@ export const business = {
   shortName: "The Colony Concrete",
   phone: "(469) 972-8639",
   phoneTel: "4699728639",
+  phoneDisplay: "469-972-8639",
   email: "sales@thecolonyconcreteco.com",
   address: {
     street: "415 Sir Torin Ln",
@@ -12,12 +13,14 @@ export const business = {
     full: "415 Sir Torin Ln, The Colony, TX 75056"
   },
   geo: {
-    latitude: 33.0857,
+    latitude: 33.0807,
     longitude: -96.8917
   },
   url: "https://thecolonyconcreteco.com",
   openingHours: ["Mo-Fr 07:00-18:00", "Sa 08:00-16:00"],
   priceRange: "$$",
+  // SEO - preserve exact existing meta description
+  metaDescription: "Professional concrete contractors serving The Colony, TX and the DFW metroplex. Driveways, patios, foundations, stamped concrete & more. Free estimates! Call 469-972-8639",
   description: "Professional concrete contractors serving The Colony, TX and the DFW metroplex. Specializing in driveways, patios, foundations, flooring, retaining walls, and commercial concrete work.",
   yearsExperience: "15+",
   ghlWebhook: "https://services.leadconnectorhq.com/hooks/XpNgKy8QHaORl5hLz4ae/webhook-trigger/6b5abab4-fcd6-4ae3-a5b7-d6eff06a5af3"
@@ -28,57 +31,49 @@ export const services = [
     slug: "driveways",
     name: "Concrete Driveways",
     shortName: "Driveways",
-    description: "Durable, beautiful concrete driveways built to last. From standard to stamped and decorative finishes.",
+    description: "Durable, attractive concrete driveways built to last. We handle everything from new installations to replacements and repairs.",
     icon: "🚗",
     keywords: ["concrete driveway", "driveway installation", "driveway replacement", "stamped driveway"]
   },
   {
     slug: "patios",
-    name: "Concrete Patios",
+    name: "Patios & Walkways",
     shortName: "Patios",
-    description: "Transform your backyard with a stunning concrete patio. Perfect for entertaining and outdoor living.",
+    description: "Transform your outdoor living space with beautiful concrete patios, walkways, and pool decks. Stamped and decorative options available.",
     icon: "🏡",
-    keywords: ["concrete patio", "patio installation", "stamped patio", "decorative patio"]
+    keywords: ["concrete patio", "patio installation", "walkways", "pool deck"]
   },
   {
     slug: "foundations",
     name: "Concrete Foundations",
     shortName: "Foundations",
-    description: "Solid foundations for homes, additions, and structures. Built to code with quality materials.",
+    description: "Solid foundations for homes and commercial buildings. We ensure proper preparation and reinforcement for lasting stability.",
     icon: "🏗️",
     keywords: ["concrete foundation", "slab foundation", "foundation repair", "foundation installation"]
   },
   {
-    slug: "flooring",
-    name: "Concrete Flooring",
-    shortName: "Flooring",
-    description: "Polished, stained, and epoxy concrete floors for garages, basements, and commercial spaces.",
-    icon: "✨",
-    keywords: ["concrete floor", "polished concrete", "epoxy flooring", "garage floor"]
+    slug: "stamped-concrete",
+    name: "Stamped Concrete",
+    shortName: "Stamped",
+    description: "Decorative stamped concrete that mimics brick, stone, tile, or wood. Add elegance to any project at a fraction of the cost.",
+    icon: "🎨",
+    keywords: ["stamped concrete", "decorative concrete", "patterned concrete", "colored concrete"]
   },
   {
-    slug: "retaining-walls",
-    name: "Retaining Walls",
-    shortName: "Retaining Walls",
-    description: "Functional and attractive retaining walls for erosion control and landscape design.",
-    icon: "🧱",
-    keywords: ["retaining wall", "concrete wall", "erosion control", "landscape wall"]
+    slug: "concrete-repair",
+    name: "Concrete Repair",
+    shortName: "Repair",
+    description: "Cracks, spalling, or settling? We repair and restore damaged concrete to extend its life and improve appearance.",
+    icon: "🔧",
+    keywords: ["concrete repair", "crack repair", "concrete restoration", "concrete resurfacing"]
   },
   {
     slug: "commercial",
     name: "Commercial Concrete",
     shortName: "Commercial",
-    description: "Large-scale commercial concrete projects including parking lots, sidewalks, and building foundations.",
+    description: "Parking lots, sidewalks, loading docks, and more. We handle commercial projects of all sizes throughout DFW.",
     icon: "🏢",
     keywords: ["commercial concrete", "parking lot", "sidewalk", "commercial foundation"]
-  },
-  {
-    slug: "industrial",
-    name: "Industrial Concrete",
-    shortName: "Industrial",
-    description: "Heavy-duty industrial concrete for warehouses, factories, and high-traffic facilities.",
-    icon: "🏭",
-    keywords: ["industrial concrete", "warehouse floor", "heavy-duty concrete", "industrial slab"]
   }
 ];
 
