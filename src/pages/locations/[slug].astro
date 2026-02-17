@@ -1,0 +1,156 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import { business, services, locations } from '../../data/business';
+
+export async function getStaticPaths() {
+  return locations.map(location => ({
+    params: { slug: location.slug },
+    props: { location }
+  }));
+}
+
+const { location } = Astro.props;
+const isPrimary = location.primary === true;
+---
+
+<Layout 
+  title={`Concrete Contractors ${location.name}, TX | ${business.name}`}
+  description={`Professional concrete contractors serving ${location.name}, TX. Driveways, patios, foundations & more. Free estimates! Call ${business.phone}`}
+  canonical={`/locations/${location.slug}/`}
+>
+  <Header />
+  
+  <!-- Hero -->
+  <section class="bg-gradient-to-br from-dark-800 to-dark-900 py-16 lg:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="text-white">
+          <a href="/locations/" class="text-accent hover:text-accent-light mb-4 inline-block">&larr; All Locations</a>
+          <h1 class="text-4xl md:text-5xl font-bold mb-6">
+            Concrete Contractors in {location.name}, TX
+          </h1>
+          <p class="text-xl text-gray-300 mb-8">
+            {business.name} provides professional concrete services to homeowners and businesses in {location.name}, Texas. From driveways to foundations, we deliver quality workmanship backed by {business.yearsExperience} years of experience.
+          </p>
+          
+          <div class="flex flex-wrap gap-4 mb-8">
+            <div class="flex items-center gap-2 text-gray-300">
+              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+              </svg>
+              Licensed & Insured
+            </div>
+            <div class="flex items-center gap-2 text-gray-300">
+              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+              </svg>
+              Free Estimates
+            </div>
+          </div>
+          
+          <a href={`tel:${business.phoneTel}`} class="inline-flex items-center gap-2 bg-accent hover:bg-accent-dark text-white px-6 py-3 rounded-lg font-bold transition">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+            </svg>
+            {business.phone}
+          </a>
+        </div>
+        <div>
+          <LeadForm title={`Get a Free Quote in ${location.name}`} />
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Services in Location -->
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold text-center mb-12">Concrete Services in {location.name}</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {services.map(service => (
+          <a href={`/services/${service.slug}/`} class="bg-gray-50 rounded-xl p-6 hover:shadow-lg transition group">
+            <span class="text-4xl mb-4 block">{service.icon}</span>
+            <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-accent transition">{service.name}</h3>
+            <p class="text-gray-600 text-sm">{service.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- Why Choose Us -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold text-center mb-12">Why {location.name} Residents Choose Us</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="text-center">
+          <div class="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-accent" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+            </svg>
+          </div>
+          <h3 class="font-bold text-lg mb-2">Local Knowledge</h3>
+          <p class="text-gray-600 text-sm">We know {location.name} soil conditions and building requirements.</p>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-accent" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
+              <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+            </svg>
+          </div>
+          <h3 class="font-bold text-lg mb-2">Fast Response</h3>
+          <p class="text-gray-600 text-sm">Quick estimates and timely project completion.</p>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-accent" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+            </svg>
+          </div>
+          <h3 class="font-bold text-lg mb-2">Fully Insured</h3>
+          <p class="text-gray-600 text-sm">Complete liability and workers compensation coverage.</p>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-accent" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+            </svg>
+          </div>
+          <h3 class="font-bold text-lg mb-2">Quality Work</h3>
+          <p class="text-gray-600 text-sm">Superior materials and craftsmanship on every project.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Nearby Cities -->
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold text-center mb-12">Also Serving Nearby Cities</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        {locations.filter(l => l.slug !== location.slug).slice(0, 10).map(loc => (
+          <a href={`/locations/${loc.slug}/`} class="bg-gray-50 rounded-lg px-4 py-3 text-center hover:bg-accent hover:text-white transition">
+            {loc.name}
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- CTA -->
+  <section class="py-16 bg-accent">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+      <h2 class="text-3xl font-bold mb-4">Ready for Your {location.name} Project?</h2>
+      <p class="text-xl opacity-90 mb-8">Get a free quote from local concrete experts today.</p>
+      <a href={`tel:${business.phoneTel}`} class="inline-flex items-center gap-2 bg-white text-accent hover:bg-gray-100 px-8 py-4 rounded-lg font-bold text-lg transition">
+        Call {business.phone}
+      </a>
+    </div>
+  </section>
+  
+  <Footer />
+</Layout>

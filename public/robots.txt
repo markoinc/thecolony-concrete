@@ -1,0 +1,33 @@
+# The Colony Concrete Co - robots.txt
+# https://thecolonyconcreteco.com
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://thecolonyconcreteco.com/sitemap-index.xml
+
+# AI Crawlers - Allow for training and retrieval
+User-agent: GPTBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Cohere-ai
+Allow: /
+
+# See llms.txt for AI-specific information
+# https://thecolonyconcreteco.com/llms.txt

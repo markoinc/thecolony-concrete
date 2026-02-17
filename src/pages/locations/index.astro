@@ -1,0 +1,74 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { business, services, locations } from '../../data/business';
+---
+
+<Layout 
+  title={`Service Areas | ${business.name}`}
+  description={`${business.name} serves The Colony and the entire DFW metroplex including Frisco, Plano, Lewisville, and more. Professional concrete services near you.`}
+  canonical="/locations/"
+>
+  <Header />
+  
+  <!-- Hero -->
+  <section class="bg-gradient-to-br from-dark-800 to-dark-900 py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+      <h1 class="text-4xl md:text-5xl font-bold mb-6">Areas We Serve</h1>
+      <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+        Professional concrete services throughout The Colony and the DFW metroplex. Find concrete contractors near you.
+      </p>
+    </div>
+  </section>
+  
+  <!-- Locations Grid -->
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {locations.map(location => (
+          <a href={`/locations/${location.slug}/`} class="bg-gray-50 hover:bg-accent hover:text-white rounded-xl p-6 transition group">
+            <div class="flex items-center gap-3 mb-3">
+              <svg class="w-6 h-6 text-accent group-hover:text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+              </svg>
+              <h2 class="text-xl font-bold">{location.name}</h2>
+            </div>
+            <p class="text-gray-600 group-hover:text-white/80 text-sm">
+              Concrete contractors in {location.name}, TX
+            </p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- Services Available -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold text-center mb-12">Services Available in All Locations</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {services.map(service => (
+          <a href={`/services/${service.slug}/`} class="bg-white p-6 rounded-xl shadow-sm hover:shadow-lg transition">
+            <span class="text-3xl mb-3 block">{service.icon}</span>
+            <h3 class="font-bold text-lg mb-2">{service.name}</h3>
+            <p class="text-gray-600 text-sm">{service.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- CTA -->
+  <section class="py-16 bg-accent">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+      <h2 class="text-3xl font-bold mb-4">Don't See Your City?</h2>
+      <p class="text-xl opacity-90 mb-8">We serve the entire DFW metroplex. Call us to confirm service in your area.</p>
+      <a href={`tel:${business.phoneTel}`} class="inline-flex items-center gap-2 bg-white text-accent hover:bg-gray-100 px-8 py-4 rounded-lg font-bold text-lg transition">
+        Call {business.phone}
+      </a>
+    </div>
+  </section>
+  
+  <Footer />
+</Layout>

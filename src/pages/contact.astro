@@ -1,0 +1,95 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import LeadForm from '../components/LeadForm.astro';
+import { business } from '../data/business';
+---
+
+<Layout 
+  title={`Contact Us | ${business.name}`}
+  description={`Contact ${business.name} for free concrete estimates in The Colony, TX and DFW. Call ${business.phone} or fill out our form.`}
+  canonical="/contact/"
+>
+  <Header />
+  
+  <!-- Hero -->
+  <section class="bg-gradient-to-br from-dark-800 to-dark-900 py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+      <h1 class="text-4xl md:text-5xl font-bold mb-6">Contact Us</h1>
+      <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+        Get your free estimate today. We respond within 24 hours.
+      </p>
+    </div>
+  </section>
+  
+  <!-- Contact Content -->
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-12">
+        <!-- Contact Info -->
+        <div>
+          <h2 class="text-3xl font-bold text-gray-900 mb-8">Get In Touch</h2>
+          
+          <div class="space-y-6">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                <svg class="w-6 h-6 text-accent" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-900 mb-1">Phone</h3>
+                <a href={`tel:${business.phoneTel}`} class="text-accent hover:text-accent-dark text-lg">{business.phone}</a>
+                <p class="text-gray-500 text-sm mt-1">Mon-Fri 7am-6pm, Sat 8am-4pm</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                <svg class="w-6 h-6 text-accent" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-900 mb-1">Email</h3>
+                <a href={`mailto:${business.email}`} class="text-accent hover:text-accent-dark">{business.email}</a>
+                <p class="text-gray-500 text-sm mt-1">We respond within 24 hours</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                <svg class="w-6 h-6 text-accent" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-900 mb-1">Location</h3>
+                <p class="text-gray-700">{business.address.full}</p>
+                <p class="text-gray-500 text-sm mt-1">Serving The Colony & DFW</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Map placeholder -->
+          <div class="mt-8 bg-gray-100 rounded-xl h-64 flex items-center justify-center">
+            <div class="text-center text-gray-500">
+              <svg class="w-12 h-12 mx-auto mb-2" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+              </svg>
+              <p>The Colony, TX</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Lead Form -->
+        <div>
+          <LeadForm title="Request Your Free Quote" subtitle="Fill out the form and we'll get back to you within 24 hours" />
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <Footer />
+</Layout>

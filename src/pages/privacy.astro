@@ -1,0 +1,77 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { business } from '../data/business';
+---
+
+<Layout 
+  title={`Privacy Policy | ${business.name}`}
+  description={`Privacy policy for ${business.name}. Learn how we collect, use, and protect your information.`}
+  canonical="/privacy/"
+>
+  <Header />
+  
+  <section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="text-4xl font-bold text-gray-900 mb-8">Privacy Policy</h1>
+      <p class="text-gray-500 mb-8">Last updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+      
+      <div class="prose prose-lg max-w-none">
+        <h2>Information We Collect</h2>
+        <p>When you use our website or contact us for a quote, we may collect:</p>
+        <ul>
+          <li>Contact information (name, email, phone number)</li>
+          <li>Property address for service estimates</li>
+          <li>Project details you provide</li>
+          <li>Website usage data through cookies and analytics</li>
+        </ul>
+        
+        <h2>How We Use Your Information</h2>
+        <p>We use the information we collect to:</p>
+        <ul>
+          <li>Respond to your inquiries and provide quotes</li>
+          <li>Schedule and complete concrete services</li>
+          <li>Improve our website and services</li>
+          <li>Send relevant communications about your project</li>
+        </ul>
+        
+        <h2>Information Sharing</h2>
+        <p>We do not sell your personal information. We may share information with:</p>
+        <ul>
+          <li>Service providers who help us operate our business</li>
+          <li>When required by law or legal process</li>
+        </ul>
+        
+        <h2>Data Security</h2>
+        <p>We implement appropriate security measures to protect your personal information. However, no method of transmission over the Internet is 100% secure.</p>
+        
+        <h2>Your Rights</h2>
+        <p>You may request to access, correct, or delete your personal information by contacting us at {business.email}.</p>
+        
+        <h2>Contact Us</h2>
+        <p>If you have questions about this privacy policy, contact us at:</p>
+        <p>
+          {business.name}<br>
+          {business.address.full}<br>
+          Email: {business.email}<br>
+          Phone: {business.phone}
+        </p>
+      </div>
+    </div>
+  </section>
+  
+  <Footer />
+</Layout>
+
+<style>
+  .prose h2 {
+    @apply text-2xl font-bold text-gray-900 mt-8 mb-4;
+  }
+  .prose p {
+    @apply text-gray-600 mb-4;
+  }
+  .prose ul {
+    @apply list-disc list-inside text-gray-600 mb-4 space-y-2;
+  }
+</style>

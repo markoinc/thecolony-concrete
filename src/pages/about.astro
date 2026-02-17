@@ -1,0 +1,115 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { business } from '../data/business';
+---
+
+<Layout 
+  title={`About Us | ${business.name}`}
+  description={`Learn about ${business.name} - your trusted concrete contractors serving The Colony, TX and the DFW metroplex for over ${business.yearsExperience} years.`}
+  canonical="/about/"
+>
+  <Header />
+  
+  <!-- Hero -->
+  <section class="bg-gradient-to-br from-dark-800 to-dark-900 py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+      <h1 class="text-4xl md:text-5xl font-bold mb-6">About {business.name}</h1>
+      <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+        Your trusted concrete contractors serving The Colony and the DFW metroplex
+      </p>
+    </div>
+  </section>
+  
+  <!-- Story -->
+  <section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="prose prose-lg max-w-none">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">Our Story</h2>
+        <p class="text-gray-600 mb-6">
+          {business.name} has been providing exceptional concrete services to homeowners and businesses throughout The Colony and the greater Dallas-Fort Worth metroplex. With a commitment to quality craftsmanship and customer satisfaction, we've built our reputation one project at a time.
+        </p>
+        <p class="text-gray-600 mb-6">
+          Our team brings {business.yearsExperience} years of combined experience in residential and commercial concrete work. We understand the unique challenges of working in North Texas - from the expansive clay soils to the hot summers - and we build accordingly.
+        </p>
+        <p class="text-gray-600">
+          Whether you need a new driveway, a backyard patio, or a commercial foundation, we approach every project with the same attention to detail and dedication to excellence.
+        </p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Values -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold text-center mb-12">Our Values</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-white p-8 rounded-xl shadow-sm">
+          <div class="w-14 h-14 bg-accent/10 rounded-lg flex items-center justify-center mb-6">
+            <svg class="w-7 h-7 text-accent" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Quality First</h3>
+          <p class="text-gray-600">We use premium materials and proven techniques to deliver concrete work that lasts for decades.</p>
+        </div>
+        <div class="bg-white p-8 rounded-xl shadow-sm">
+          <div class="w-14 h-14 bg-accent/10 rounded-lg flex items-center justify-center mb-6">
+            <svg class="w-7 h-7 text-accent" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Customer Focus</h3>
+          <p class="text-gray-600">Your satisfaction is our priority. We communicate clearly and deliver on our promises.</p>
+        </div>
+        <div class="bg-white p-8 rounded-xl shadow-sm">
+          <div class="w-14 h-14 bg-accent/10 rounded-lg flex items-center justify-center mb-6">
+            <svg class="w-7 h-7 text-accent" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Transparency</h3>
+          <p class="text-gray-600">Honest pricing, clear timelines, and no surprises. We stand behind our quotes and our work.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Stats -->
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div>
+          <div class="text-4xl font-bold text-accent mb-2">{business.yearsExperience}</div>
+          <div class="text-gray-600">Years Experience</div>
+        </div>
+        <div>
+          <div class="text-4xl font-bold text-accent mb-2">500+</div>
+          <div class="text-gray-600">Projects Completed</div>
+        </div>
+        <div>
+          <div class="text-4xl font-bold text-accent mb-2">20+</div>
+          <div class="text-gray-600">Cities Served</div>
+        </div>
+        <div>
+          <div class="text-4xl font-bold text-accent mb-2">5.0</div>
+          <div class="text-gray-600">Star Rating</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- CTA -->
+  <section class="py-16 bg-accent">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+      <h2 class="text-3xl font-bold mb-4">Ready to Work With Us?</h2>
+      <p class="text-xl opacity-90 mb-8">Get a free quote for your concrete project today.</p>
+      <a href="/contact/" class="inline-flex items-center gap-2 bg-white text-accent hover:bg-gray-100 px-8 py-4 rounded-lg font-bold text-lg transition">
+        Contact Us
+      </a>
+    </div>
+  </section>
+  
+  <Footer />
+</Layout>

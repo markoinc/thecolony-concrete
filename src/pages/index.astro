@@ -1,0 +1,270 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import LeadForm from '../components/LeadForm.astro';
+import { business, services, locations, faqs } from '../data/business';
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(faq => ({
+    "@type": "Question",
+    "name": faq.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.answer
+    }
+  }))
+};
+---
+
+<Layout 
+  title={`Concrete Contractors The Colony, TX | ${business.name}`}
+  description={`Professional concrete contractors serving The Colony, TX and the DFW metroplex. Driveways, patios, foundations, flooring & more. Free estimates! Call ${business.phone}`}
+  canonical="/"
+  schema={faqSchema}
+>
+  <Header />
+  
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-br from-dark-800 to-dark-900 relative overflow-hidden">
+    <div class="absolute inset-0 bg-[url('/images/concrete-texture.jpg')] opacity-5"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 relative">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <!-- Hero Content -->
+        <div class="text-white">
+          <div class="inline-flex items-center gap-2 bg-accent/20 border border-accent/30 px-4 py-2 rounded-full text-sm mb-6">
+            <svg class="w-4 h-4 text-accent" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+            </svg>
+            <span>Serving The Colony & DFW Metroplex</span>
+          </div>
+          
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+            Local <span class="text-accent">Concrete Contractors</span> in The Colony, TX
+          </h1>
+          
+          <p class="text-xl text-gray-300 mb-8">
+            Premier concrete services for driveways, patios, foundations & more. Quality craftsmanship with {business.yearsExperience} years of experience. Get your free estimate today!
+          </p>
+          
+          <div class="flex flex-wrap gap-4 mb-8">
+            <div class="flex items-center gap-2 text-gray-300">
+              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+              </svg>
+              Licensed & Insured
+            </div>
+            <div class="flex items-center gap-2 text-gray-300">
+              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+              </svg>
+              {business.yearsExperience} Years Experience
+            </div>
+            <div class="flex items-center gap-2 text-gray-300">
+              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+              </svg>
+              Free Estimates
+            </div>
+          </div>
+          
+          <a href={`tel:${business.phoneTel}`} class="inline-flex items-center gap-2 bg-accent hover:bg-accent-dark text-white px-8 py-4 rounded-lg font-bold text-lg transition">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+            </svg>
+            {business.phone}
+          </a>
+        </div>
+        
+        <!-- Lead Form -->
+        <div class="lg:pl-8">
+          <LeadForm />
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Trust Bar -->
+  <section class="bg-white border-b border-gray-100 py-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center">
+            <svg class="w-6 h-6 text-accent" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+            </svg>
+          </div>
+          <div>
+            <p class="font-semibold text-gray-900">Licensed</p>
+            <p class="text-sm text-gray-500">TX Contractor</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center">
+            <svg class="w-6 h-6 text-accent" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+            </svg>
+          </div>
+          <div>
+            <p class="font-semibold text-gray-900">Insured</p>
+            <p class="text-sm text-gray-500">Full Coverage</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center">
+            <svg class="w-6 h-6 text-accent" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+            </svg>
+          </div>
+          <div>
+            <p class="font-semibold text-gray-900">{business.yearsExperience} Years</p>
+            <p class="text-sm text-gray-500">Experience</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center">
+            <svg class="w-6 h-6 text-accent" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+            </svg>
+          </div>
+          <div>
+            <p class="font-semibold text-gray-900">5-Star</p>
+            <p class="text-sm text-gray-500">Reviews</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Services Section -->
+  <section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Our Concrete Services</h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          From residential driveways to commercial projects, we deliver quality concrete work that lasts.
+        </p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {services.map(service => (
+          <a href={`/services/${service.slug}/`} class="bg-white rounded-xl p-6 shadow-sm hover:shadow-lg transition group">
+            <div class="text-4xl mb-4">{service.icon}</div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-accent transition">{service.name}</h3>
+            <p class="text-gray-600 mb-4">{service.description}</p>
+            <span class="text-accent font-semibold flex items-center gap-2 group-hover:gap-3 transition-all">
+              Learn More
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- Process Section -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Simple & Hassle-Free Process</h2>
+        <p class="text-xl text-gray-600">From consultation to completion, we make it easy</p>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="text-center">
+          <div class="w-16 h-16 bg-accent text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6">1</div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Schedule Consultation</h3>
+          <p class="text-gray-600">Fill out the quote form or give us a call to schedule your free on-site consultation.</p>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 bg-accent text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6">2</div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Get Your Quote</h3>
+          <p class="text-gray-600">We'll assess your project and provide a detailed, transparent quote with no hidden fees.</p>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 bg-accent text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6">3</div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Get Started</h3>
+          <p class="text-gray-600">We agree on a timeline and our expert crew gets to work transforming your property.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Service Areas -->
+  <section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Areas We Serve</h2>
+        <p class="text-xl text-gray-600">Proudly serving The Colony and the DFW metroplex</p>
+      </div>
+      
+      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        {locations.map(location => (
+          <a href={`/locations/${location.slug}/`} class="bg-white rounded-lg px-4 py-3 text-center hover:bg-accent hover:text-white transition shadow-sm">
+            {location.name}
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- FAQ Section -->
+  <section class="py-20 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
+        <p class="text-xl text-gray-600">Everything you need to know about our concrete services</p>
+      </div>
+      
+      <div class="space-y-4">
+        {faqs.map((faq, i) => (
+          <details class="bg-gray-50 rounded-lg group" open={i === 0}>
+            <summary class="p-6 cursor-pointer font-semibold text-lg text-gray-900 flex justify-between items-center list-none">
+              {faq.question}
+              <svg class="w-5 h-5 text-gray-500 transition group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </summary>
+            <div class="px-6 pb-6 text-gray-600">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- Final CTA -->
+  <section class="py-20 bg-gradient-to-br from-dark-800 to-dark-900 text-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Get Started?</h2>
+      <p class="text-xl text-gray-300 mb-8">
+        Get a free, no-obligation quote for your concrete project today.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href={`tel:${business.phoneTel}`} class="inline-flex items-center justify-center gap-2 bg-accent hover:bg-accent-dark text-white px-8 py-4 rounded-lg font-bold text-lg transition">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+          </svg>
+          Call {business.phone}
+        </a>
+        <a href="/contact/" class="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white px-8 py-4 rounded-lg font-bold text-lg transition border border-white/20">
+          Request Online Quote
+        </a>
+      </div>
+    </div>
+  </section>
+  
+  <Footer />
+</Layout>
+
+<style>
+  /* Remove default details marker */
+  details > summary::-webkit-details-marker {
+    display: none;
+  }
+</style>

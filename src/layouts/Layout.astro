@@ -1,0 +1,114 @@
+---
+import '../styles/global.css';
+import { business } from '../data/business';
+
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  schema?: any;
+}
+
+const { title, description, canonical = Astro.url.pathname, schema } = Astro.props;
+const fullCanonical = `${business.url}${canonical}`;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title}</title>
+  <meta name="description" content={description}>
+  <link rel="canonical" href={fullCanonical}>
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content={title}>
+  <meta property="og:description" content={description}>
+  <meta property="og:type" content="website">
+  <meta property="og:url" content={fullCanonical}>
+  <meta property="og:image" content={`${business.url}/images/og-image.jpg`}>
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content={business.name}>
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content={title}>
+  <meta name="twitter:description" content={description}>
+  <meta name="twitter:image" content={`${business.url}/images/og-image.jpg`}>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <!-- Schema Markup -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": `${business.url}/#business`,
+    "name": business.name,
+    "image": `${business.url}/images/logo.png`,
+    "telephone": business.phone,
+    "email": business.email,
+    "url": business.url,
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": business.address.street,
+      "addressLocality": business.address.city,
+      "addressRegion": business.address.state,
+      "postalCode": business.address.zip,
+      "addressCountry": "US"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": business.geo.latitude,
+      "longitude": business.geo.longitude
+    },
+    "priceRange": business.priceRange,
+    "openingHours": business.openingHours,
+    "areaServed": [
+      {"@type": "City", "name": "The Colony", "addressRegion": "TX"},
+      {"@type": "City", "name": "Frisco", "addressRegion": "TX"},
+      {"@type": "City", "name": "Plano", "addressRegion": "TX"},
+      {"@type": "City", "name": "Lewisville", "addressRegion": "TX"},
+      {"@type": "City", "name": "Little Elm", "addressRegion": "TX"},
+      {"@type": "City", "name": "Carrollton", "addressRegion": "TX"},
+      {"@type": "City", "name": "Flower Mound", "addressRegion": "TX"},
+      {"@type": "City", "name": "McKinney", "addressRegion": "TX"}
+    ],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Concrete Services",
+      "itemListElement": [
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Concrete Driveways"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Concrete Patios"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Concrete Foundations"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Concrete Flooring"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Retaining Walls"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Commercial Concrete"}}
+      ]
+    }
+  })}></script>
+  
+  {schema && (
+    <script type="application/ld+json" set:html={JSON.stringify(schema)}></script>
+  )}
+</head>
+<body class="font-sans text-gray-900 bg-white">
+  <slot />
+  
+  <!-- Mobile Menu Script -->
+  <script>
+    const mobileToggle = document.getElementById('mobile-menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    mobileToggle?.addEventListener('click', () => {
+      mobileMenu?.classList.toggle('hidden');
+    });
+  </script>
+</body>
+</html>

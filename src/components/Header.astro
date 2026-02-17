@@ -1,0 +1,71 @@
+---
+import { business, services } from '../data/business';
+---
+
+<header class="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center py-3">
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-3">
+        <div class="w-12 h-12 bg-accent rounded-lg flex items-center justify-center">
+          <span class="text-white font-bold text-xl">TC</span>
+        </div>
+        <div class="hidden sm:block">
+          <span class="font-bold text-lg text-dark-800">{business.name}</span>
+        </div>
+      </a>
+      
+      <!-- Desktop Nav -->
+      <nav class="hidden lg:flex items-center gap-8">
+        <a href="/" class="text-gray-700 hover:text-accent font-medium transition">Home</a>
+        <div class="relative group">
+          <button class="text-gray-700 hover:text-accent font-medium transition flex items-center gap-1">
+            Services
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+          <div class="absolute top-full left-0 bg-white shadow-lg rounded-lg py-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+            {services.map(service => (
+              <a href={`/services/${service.slug}/`} class="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-accent">{service.name}</a>
+            ))}
+          </div>
+        </div>
+        <a href="/locations/" class="text-gray-700 hover:text-accent font-medium transition">Locations</a>
+        <a href="/about/" class="text-gray-700 hover:text-accent font-medium transition">About</a>
+        <a href="/contact/" class="text-gray-700 hover:text-accent font-medium transition">Contact</a>
+      </nav>
+      
+      <!-- Phone CTA -->
+      <a href={`tel:${business.phoneTel}`} class="hidden sm:flex items-center gap-2 bg-accent hover:bg-accent-dark text-white px-4 py-2 rounded-lg font-semibold transition">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+        </svg>
+        {business.phone}
+      </a>
+      
+      <!-- Mobile Menu Toggle -->
+      <button id="mobile-menu-toggle" class="lg:hidden p-2" aria-label="Toggle menu">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+    
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="lg:hidden hidden pb-4">
+      <nav class="flex flex-col gap-2">
+        <a href="/" class="text-gray-700 hover:text-accent py-2 font-medium">Home</a>
+        <a href="/services/driveways/" class="text-gray-700 hover:text-accent py-2 font-medium">Driveways</a>
+        <a href="/services/patios/" class="text-gray-700 hover:text-accent py-2 font-medium">Patios</a>
+        <a href="/services/foundations/" class="text-gray-700 hover:text-accent py-2 font-medium">Foundations</a>
+        <a href="/locations/" class="text-gray-700 hover:text-accent py-2 font-medium">Locations</a>
+        <a href="/about/" class="text-gray-700 hover:text-accent py-2 font-medium">About</a>
+        <a href="/contact/" class="text-gray-700 hover:text-accent py-2 font-medium">Contact</a>
+        <a href={`tel:${business.phoneTel}`} class="bg-accent text-white text-center py-3 rounded-lg font-semibold mt-2">
+          Call {business.phone}
+        </a>
+      </nav>
+    </div>
+  </div>
+</header>

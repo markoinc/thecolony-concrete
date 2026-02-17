@@ -1,0 +1,136 @@
+---
+import { business } from '../data/business';
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  dark?: boolean;
+}
+
+const { title = "Get Your Free Quote", subtitle = "No obligation • Response within 24 hours", dark = false } = Astro.props;
+---
+
+<div class={`rounded-2xl p-6 sm:p-8 ${dark ? 'bg-dark-800' : 'bg-white shadow-xl'}`}>
+  <h3 class={`text-2xl font-bold mb-2 ${dark ? 'text-white' : 'text-gray-900'}`}>{title}</h3>
+  <p class={`mb-6 ${dark ? 'text-gray-400' : 'text-gray-600'}`}>{subtitle}</p>
+  
+  <form id="lead-form" class="space-y-4">
+    <div>
+      <label for="name" class={`block text-sm font-medium mb-1 ${dark ? 'text-gray-300' : 'text-gray-700'}`}>Name *</label>
+      <input 
+        type="text" 
+        id="name" 
+        name="name" 
+        required 
+        class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-accent focus:border-accent outline-none transition"
+        placeholder="Your name"
+      >
+    </div>
+    
+    <div>
+      <label for="phone" class={`block text-sm font-medium mb-1 ${dark ? 'text-gray-300' : 'text-gray-700'}`}>Phone *</label>
+      <input 
+        type="tel" 
+        id="phone" 
+        name="phone" 
+        required 
+        class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-accent focus:border-accent outline-none transition"
+        placeholder="(555) 123-4567"
+      >
+    </div>
+    
+    <div>
+      <label for="email" class={`block text-sm font-medium mb-1 ${dark ? 'text-gray-300' : 'text-gray-700'}`}>Email</label>
+      <input 
+        type="email" 
+        id="email" 
+        name="email" 
+        class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-accent focus:border-accent outline-none transition"
+        placeholder="you@email.com"
+      >
+    </div>
+    
+    <div>
+      <label for="service" class={`block text-sm font-medium mb-1 ${dark ? 'text-gray-300' : 'text-gray-700'}`}>Service Needed</label>
+      <select 
+        id="service" 
+        name="service" 
+        class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-accent focus:border-accent outline-none transition"
+      >
+        <option value="">Select a service</option>
+        <option value="Concrete Driveway">Concrete Driveway</option>
+        <option value="Concrete Patio">Concrete Patio</option>
+        <option value="Foundation">Foundation</option>
+        <option value="Concrete Flooring">Concrete Flooring</option>
+        <option value="Retaining Wall">Retaining Wall</option>
+        <option value="Commercial Concrete">Commercial Concrete</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    
+    <div>
+      <label for="message" class={`block text-sm font-medium mb-1 ${dark ? 'text-gray-300' : 'text-gray-700'}`}>Project Details</label>
+      <textarea 
+        id="message" 
+        name="message" 
+        rows="3" 
+        class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-accent focus:border-accent outline-none transition resize-none"
+        placeholder="Tell us about your project..."
+      ></textarea>
+    </div>
+    
+    <button 
+      type="submit" 
+      class="w-full bg-accent hover:bg-accent-dark text-white font-bold py-4 px-6 rounded-lg transition transform hover:scale-[1.02] active:scale-[0.98]"
+    >
+      Get My Free Quote
+    </button>
+    
+    <p class={`text-xs text-center ${dark ? 'text-gray-500' : 'text-gray-500'}`}>
+      By submitting, you agree to receive calls/texts. Privacy policy applies.
+    </p>
+  </form>
+  
+  <div id="form-success" class="hidden text-center py-8">
+    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+      <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+      </svg>
+    </div>
+    <h4 class={`text-xl font-bold mb-2 ${dark ? 'text-white' : 'text-gray-900'}`}>Thank You!</h4>
+    <p class={dark ? 'text-gray-400' : 'text-gray-600'}>We'll contact you within 24 hours with your free quote.</p>
+  </div>
+</div>
+
+<script define:vars={{ webhook: business.ghlWebhook }}>
+  const form = document.getElementById('lead-form');
+  const success = document.getElementById('form-success');
+  
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData(form);
+    const data = {
+      name: formData.get('name'),
+      phone: formData.get('phone'),
+      email: formData.get('email') || '',
+      service: formData.get('service') || '',
+      message: formData.get('message') || '',
+      source: window.location.href
+    };
+    
+    try {
+      await fetch(webhook, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+        mode: 'no-cors'
+      });
+      
+      form.classList.add('hidden');
+      success?.classList.remove('hidden');
+    } catch (err) {
+      alert('Something went wrong. Please call us directly at (469) 972-8639');
+    }
+  });
+</script>

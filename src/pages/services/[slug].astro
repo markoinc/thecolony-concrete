@@ -1,0 +1,222 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import { business, services, faqs } from '../../data/business';
+
+export async function getStaticPaths() {
+  return services.map(service => ({
+    params: { slug: service.slug },
+    props: { service }
+  }));
+}
+
+const { service } = Astro.props;
+
+const serviceContent = {
+  driveways: {
+    title: `Concrete Driveway Contractors in The Colony, TX`,
+    h1: "Professional Concrete Driveways",
+    intro: "A beautiful, durable concrete driveway adds curb appeal and value to your home. Our expert team delivers quality driveway installation, replacement, and repair services throughout The Colony and the DFW metroplex.",
+    benefits: [
+      "Lasts 25-30+ years with proper maintenance",
+      "Increases home value and curb appeal",
+      "Low maintenance compared to asphalt",
+      "Multiple finish options (stamped, exposed aggregate, colored)",
+      "Withstands Texas heat and weather"
+    ],
+    features: [
+      { title: "New Driveway Installation", desc: "Complete design and installation of new concrete driveways with proper grading and drainage." },
+      { title: "Driveway Replacement", desc: "Full removal of old, cracked driveways and installation of new concrete with modern techniques." },
+      { title: "Stamped Driveways", desc: "Decorative patterns that mimic brick, stone, or tile at a fraction of the cost." },
+      { title: "Driveway Extensions", desc: "Expand your existing driveway for more parking space or better functionality." }
+    ]
+  },
+  patios: {
+    title: `Concrete Patio Contractors in The Colony, TX`,
+    h1: "Beautiful Concrete Patios",
+    intro: "Transform your backyard into an outdoor oasis with a custom concrete patio. Perfect for entertaining, relaxing, and enjoying the Texas outdoors year-round.",
+    benefits: [
+      "Extends your living space outdoors",
+      "Durable and weather-resistant",
+      "Endless design possibilities",
+      "Low maintenance requirements",
+      "Increases property value"
+    ],
+    features: [
+      { title: "Custom Patio Design", desc: "Work with our team to design the perfect patio shape, size, and style for your space." },
+      { title: "Stamped Concrete Patios", desc: "Beautiful decorative patterns that complement your home's architecture." },
+      { title: "Pool Deck Installation", desc: "Slip-resistant concrete surfaces perfect for around pools and water features." },
+      { title: "Patio Covers & Extensions", desc: "Expand existing patios or add covered areas for year-round enjoyment." }
+    ]
+  },
+  foundations: {
+    title: `Concrete Foundation Contractors in The Colony, TX`,
+    h1: "Solid Concrete Foundations",
+    intro: "Your home's foundation is its most critical component. We build strong, properly engineered foundations that protect your investment for generations.",
+    benefits: [
+      "Engineered for Texas soil conditions",
+      "Meets or exceeds building codes",
+      "Proper moisture barriers and drainage",
+      "Quality materials and construction",
+      "Licensed and insured work"
+    ],
+    features: [
+      { title: "Slab Foundations", desc: "Monolithic and stem wall slab foundations for new construction and additions." },
+      { title: "Pier & Beam Foundations", desc: "Elevated foundations ideal for certain soil conditions and flood-prone areas." },
+      { title: "Foundation Repair", desc: "Assessment and repair of foundation cracks, settling, and structural issues." },
+      { title: "Garage & Shop Slabs", desc: "Heavy-duty concrete slabs for detached garages, workshops, and outbuildings." }
+    ]
+  },
+  flooring: {
+    title: `Concrete Flooring Contractors in The Colony, TX`,
+    h1: "Professional Concrete Flooring",
+    intro: "Modern concrete floors combine durability with stunning aesthetics. From polished garage floors to decorative interior surfaces, we deliver beautiful results.",
+    benefits: [
+      "Extremely durable and long-lasting",
+      "Easy to clean and maintain",
+      "Eco-friendly flooring option",
+      "Endless design possibilities",
+      "Cost-effective vs. other materials"
+    ],
+    features: [
+      { title: "Polished Concrete", desc: "High-gloss finishes that are beautiful, durable, and easy to maintain." },
+      { title: "Epoxy Coatings", desc: "Protective coatings for garage floors, warehouses, and commercial spaces." },
+      { title: "Stained Concrete", desc: "Rich, natural colors achieved through acid or water-based staining." },
+      { title: "Concrete Overlays", desc: "Resurface existing floors with decorative concrete toppings." }
+    ]
+  },
+  "retaining-walls": {
+    title: `Retaining Wall Contractors in The Colony, TX`,
+    h1: "Quality Retaining Walls",
+    intro: "Functional and beautiful retaining walls solve drainage problems, prevent erosion, and create usable outdoor spaces on sloped properties.",
+    benefits: [
+      "Controls erosion and drainage",
+      "Creates level outdoor spaces",
+      "Adds visual interest to landscaping",
+      "Increases property value",
+      "Long-lasting and low maintenance"
+    ],
+    features: [
+      { title: "Concrete Block Walls", desc: "Engineered retaining wall systems with proper drainage and reinforcement." },
+      { title: "Poured Concrete Walls", desc: "Custom formed walls for larger projects and unique designs." },
+      { title: "Decorative Walls", desc: "Walls that double as landscape features with planters and seating." },
+      { title: "Wall Repair", desc: "Assessment and repair of failing retaining walls and drainage issues." }
+    ]
+  },
+  commercial: {
+    title: `Commercial Concrete Contractors in The Colony, TX`,
+    h1: "Commercial Concrete Services",
+    intro: "From parking lots to building foundations, we deliver commercial-grade concrete work that meets the demands of businesses and developers.",
+    benefits: [
+      "Heavy-duty commercial specifications",
+      "On-time project completion",
+      "Experienced commercial crews",
+      "Full permitting assistance",
+      "Competitive commercial pricing"
+    ],
+    features: [
+      { title: "Parking Lots", desc: "Full parking lot construction with proper drainage, striping, and ADA compliance." },
+      { title: "Commercial Foundations", desc: "Large-scale foundation work for retail, office, and industrial buildings." },
+      { title: "Sidewalks & Curbing", desc: "Public and private walkways, curbing, and accessibility ramps." },
+      { title: "Loading Docks", desc: "Heavy-duty concrete for loading areas and warehouse access." }
+    ]
+  },
+  industrial: {
+    title: `Industrial Concrete Contractors in The Colony, TX`,
+    h1: "Industrial Concrete Solutions",
+    intro: "Specialized concrete work for warehouses, manufacturing facilities, and heavy industrial applications requiring exceptional durability.",
+    benefits: [
+      "High-strength concrete mixes",
+      "Designed for heavy equipment",
+      "Chemical-resistant options",
+      "Proper joint design",
+      "Meets industrial specifications"
+    ],
+    features: [
+      { title: "Warehouse Floors", desc: "Flat, durable floors designed for forklifts and heavy storage." },
+      { title: "Manufacturing Slabs", desc: "Specialized surfaces for machinery and production equipment." },
+      { title: "Containment Areas", desc: "Secondary containment and spill prevention concrete structures." },
+      { title: "Heavy Equipment Pads", desc: "Reinforced concrete pads for generators, HVAC, and heavy equipment." }
+    ]
+  }
+};
+
+const content = serviceContent[service.slug] || serviceContent.driveways;
+---
+
+<Layout 
+  title={content.title}
+  description={`${service.description} Professional ${service.name.toLowerCase()} services in The Colony, TX and DFW. Free estimates! Call ${business.phone}`}
+  canonical={`/services/${service.slug}/`}
+>
+  <Header />
+  
+  <!-- Hero -->
+  <section class="bg-gradient-to-br from-dark-800 to-dark-900 py-16 lg:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="text-white">
+          <a href="/" class="text-accent hover:text-accent-light mb-4 inline-block">&larr; Back to Home</a>
+          <h1 class="text-4xl md:text-5xl font-bold mb-6">{content.h1}</h1>
+          <p class="text-xl text-gray-300 mb-8">{content.intro}</p>
+          <a href={`tel:${business.phoneTel}`} class="inline-flex items-center gap-2 bg-accent hover:bg-accent-dark text-white px-6 py-3 rounded-lg font-bold transition">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+            </svg>
+            {business.phone}
+          </a>
+        </div>
+        <div>
+          <LeadForm title={`Get a Free ${service.shortName} Quote`} />
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Benefits -->
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold text-center mb-12">Why Choose Concrete {service.shortName}?</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {content.benefits.map(benefit => (
+          <div class="flex items-start gap-3 p-4 bg-gray-50 rounded-lg">
+            <svg class="w-6 h-6 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+            </svg>
+            <span class="text-gray-700">{benefit}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- Services Grid -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold text-center mb-12">Our {service.shortName} Services</h2>
+      <div class="grid md:grid-cols-2 gap-8">
+        {content.features.map(feature => (
+          <div class="bg-white p-6 rounded-xl shadow-sm">
+            <h3 class="text-xl font-bold text-gray-900 mb-3">{feature.title}</h3>
+            <p class="text-gray-600">{feature.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- CTA -->
+  <section class="py-16 bg-accent">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+      <h2 class="text-3xl font-bold mb-4">Ready to Start Your {service.shortName} Project?</h2>
+      <p class="text-xl opacity-90 mb-8">Get a free, no-obligation quote from our expert team today.</p>
+      <a href={`tel:${business.phoneTel}`} class="inline-flex items-center gap-2 bg-white text-accent hover:bg-gray-100 px-8 py-4 rounded-lg font-bold text-lg transition">
+        Call {business.phone}
+      </a>
+    </div>
+  </section>
+  
+  <Footer />
+</Layout>
