@@ -1,11 +1,11 @@
 /* The Colony Concrete Co - Main Styles */
 :root {
-    --primary: #ff8d00;
-    --primary-dark: #e67e00;
-    --secondary: #1B2336;
-    --dark: #111922;
-    --light: #f8f8f8;
-    --gray: #5a5a68;
+    --primary: #d4a843;        /* Gold - CTAs, accents */
+    --primary-dark: #b8912e;   /* Darker gold for hover */
+    --secondary: #0d5c63;      /* Deep Teal - headers, brand */
+    --dark: #1a2e35;           /* Dark teal-gray */
+    --light: #f5f8f8;          /* Light teal tint */
+    --gray: #4a5c60;           /* Muted teal-gray */
     --white: #ffffff;
 }
 
